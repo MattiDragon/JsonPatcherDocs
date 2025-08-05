@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page('Stdlib', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <h1>Standard Library Symbols</h1>
+    <p>
+        This page contains documentation for symbols in the standard library of the JsonPatcher language.
+        This is separate from <a th:href="@{./mod-stdlib.html}">the symbols added by the mod</a> and symbols
+        available to <a th:href="@{./mod-data.html}">datapacks</a> and <a th:href="@{./mod-assets.html}">resource packs</a>
+    </p>
+    <th:block th:replace="~{code_docs/stdlib}"></th:block>
+</th:block>
+</body>
+</html>

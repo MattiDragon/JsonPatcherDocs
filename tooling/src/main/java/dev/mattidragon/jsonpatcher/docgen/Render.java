@@ -3,9 +3,7 @@ package dev.mattidragon.jsonpatcher.docgen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.TemplateSpec;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.io.IOException;
@@ -42,15 +40,20 @@ public class Render {
         Util.clearOutputFolder(outFolder);
 
         var context = new Context();
-        try (var stream = Files.walk(Path.of(templatesFolder).resolve("pages"))) {
+
+        var templatesPath = Path.of(templatesFolder);
+        var pagesPath = templatesPath.resolve("pages");
+
+        try (var stream = Files.walk(pagesPath)) {
             stream.parallel()
                     .filter(Files::isRegularFile)
                     .forEach(path -> {
-                        var relativePath = Path.of(templatesFolder).relativize(path);
-                        var templateName = relativePath.toString().replace('\\', '/');
+                        var templateName = templatesPath.relativize(path).toString().replace('\\', '/');
                         LOGGER.info("Processing template: {}", templateName);
                         try {
-                            try (var writer = Files.newBufferedWriter(outFolder.resolve(relativePath.getFileName()))) {
+                            var outPath = outFolder.resolve(pagesPath.relativize(path));
+                            Files.createDirectories(outPath.getParent());
+                            try (var writer = Files.newBufferedWriter(outPath)) {
                                 templateEngine.process(templateName, context, writer);
                             }
                         } catch (IOException e) {

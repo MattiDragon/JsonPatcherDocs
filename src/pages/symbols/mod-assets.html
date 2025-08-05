@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page('Resourcepack Stdlib', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <h1>Resourcepack Library Symbols</h1>
+    <p>
+        This page contains documentation for symbols in the standard library of the JsonPatcher mod,
+        available only to patches loaded along with resourcepack files.
+        Unless something is otherwise stated, everything here should be available to all code ran by the mod.
+    </p>
+    <th:block th:replace="~{code_docs/mod-assets}"></th:block>
+</th:block>
+</body>
+</html>

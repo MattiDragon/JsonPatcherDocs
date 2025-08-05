@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page('Mod Stdlib', ~{::content})}">
+<body>
+<th:block th:fragment="content">
+    <h1>Mod Library Symbols</h1>
+    <p>
+        This page contains documentation for symbols in the standard library of the JsonPatcher mod.
+        These symbols interact more directly with minecraft than those found in <a th:href="@{/symbols/stdlib.html}">the language stdlib</a>.
+        Unless something is otherwise stated, everything here should be available to all code ran by the mod.
+    </p>
+    <th:block th:replace="~{code_docs/mod}"></th:block>
+</th:block>
+</body>
+</html>

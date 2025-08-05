@@ -50,6 +50,11 @@ abstract class GenDocs : JavaExec() {
         doFirst {
             outputFile.get().asFile.parentFile.mkdirs()
         }
+        doLast {
+            if (outputFile.get().asFile.length() == 0L) {
+                outputFile.get().asFile.writeText("<p>No documentation available.</p>\n")
+            }
+        }
     }
 
     override fun exec() {
@@ -66,7 +71,7 @@ fun Sync.configureExtractTask(configuration: Configuration, segmentsToDrop: Int 
     description = "Extracts files from the ${configuration.name} configuration."
 
     dependsOn(configuration)
-    from(zipTree(mod.resolve().single())) {
+    from(zipTree(configuration.resolve().single())) {
         filter()
         eachFile {
             val segments = relativePath.segments.drop(segmentsToDrop).toTypedArray()

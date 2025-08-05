@@ -1,0 +1,60 @@
+.docs-page {
+    display: grid;
+    grid-template-areas: "header header header"
+                         "sidebar content ."
+                         "footer footer footer";
+    grid-template-rows: 3rem 1fr 5rem;
+    grid-template-columns: 1fr minmax(auto, 1200px) 1fr;
+    min-height: 100vh;
+
+    > header {
+        display: grid;
+        grid-template-areas: "header-content";
+        grid-template-rows: 100%;
+
+        grid-area: header;
+        padding: 5px;
+        background-color: var(--accent-color);
+
+        > #nav-sidebar-checkbox {
+            display: none;
+            align-self: start;
+            grid-area: header-content;
+        }
+
+        > .docs-title {
+            justify-self: center;
+            grid-area: header-content;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    }
+
+    > aside {
+        grid-area: sidebar;
+        position: sticky;
+        top: 0;
+        width: 250px;
+        height: fit-content;
+        padding: 20px;
+        background-color: var(--background-color-2);
+    }
+
+    > main {
+        grid-area: content;
+        place-self: start center;
+        padding: 20px;
+        background-color: var(--background-color);
+
+        > :first-child {
+            margin-top: 0;
+        }
+    }
+
+    > footer {
+        grid-area: footer;
+        padding: 10px;
+        text-align: center;
+        background-color: var(--background-color-1);
+    }
+}
