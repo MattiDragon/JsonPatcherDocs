@@ -151,6 +151,13 @@ val genDocs by tasks.registering {
     )
 }
 
+val extractFavicon by tasks.registering(Sync::class) {
+    configureExtractTask(mod, 2) {
+        include("assets/jsonpatcher/icon.png")
+    }
+    into(layout.buildDirectory.dir("source/favicon"))
+}
+
 val convertMarkdown by tasks.registering(JavaExec::class) {
     group = "documentation"
     description = "Converts Markdown files to HTML."
@@ -205,8 +212,17 @@ val renderDocumentation by tasks.registering(JavaExec::class) {
         outDir.get().asFile
     )
 
+    jvmArgumentProviders.add {
+        project.property("base_url")?.let {
+            listOf(
+                "-Drenderer.base_url=${it}"
+            )
+        } ?: listOf()
+    }
+
     outputs.dir(outDir)
     inputs.dir(inDir.singleFile)
+    inputs.property("base_url", project.property("base_url") ?: "")
     dependsOn(copyTemplates)
 }
 
@@ -215,7 +231,8 @@ val joinSite by tasks.registering(Sync::class) {
     description = "Joins all generated documentation files into a single output directory."
 
     from(renderDocumentation.get().outputs.files)
-    from(layout.buildDirectory.dir("src/static"))
+    from(layout.projectDirectory.dir("src/static"))
+    from(extractFavicon.get().outputs.files)
 
     into(layout.buildDirectory.dir("out"))
 }

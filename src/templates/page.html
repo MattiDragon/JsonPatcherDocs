@@ -3,14 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title th:text="${title}">Document Title</title>
+
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="icon" type="image/png" th:href="@{/icon.png}">
 </head>
-<body>
+<body class="docs-page">
 <header>
+    <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
     Header
 </header>
+<aside id="nav-sidebar">
+    lorem ipsum dolor sit amet,
+    <br>consectetur adipiscing elit.
+    <br>Sed do eiusmod tempor incididunt
+    <br>ut labore et dolore magna aliqua.
+    <br>Ut enim ad minim veniam,
+    <br>quis nostrud exercitation ullamco
+    <br>laboris nisi ut aliquip ex ea commodo consequat.
+    <br>Duis aute irure dolor in reprehenderit
+    <br>in voluptate velit esse cillum
+    <br>dolore eu fugiat nulla pariatur.
+    <br>Excepteur sint occaecat cupidatat
+    <br>non proident, sunt in culpa
+    <br>qui officia deserunt mollit
+    <br>anim id est laborum.
+    lorem ipsum dolor sit amet,
+    <br>consectetur adipiscing elit.
+    <br>Sed do eiusmod tempor incididunt
+    <br>ut labore et dolore magna aliqua.
+    <br>Ut enim ad minim veniam,
+    <br>quis nostrud exercitation ullamco
+    <br>laboris nisi ut aliquip ex ea commodo consequat.
+    <br>Duis aute irure dolor in reprehenderit
+    <br>in voluptate velit esse cillum
+    <br>dolore eu fugiat nulla pariatur.
+    <br>Excepteur sint occaecat cupidatat
+    <br>non proident, sunt in culpa
+    <br>qui officia deserunt mollit
+    <br>anim id est laborum.
+    lorem ipsum dolor sit amet,
+    <br>consectetur adipiscing elit.
+    <br>Sed do eiusmod tempor incididunt
+    <br>ut labore et dolore magna aliqua.
+    <br>Ut enim ad minim veniam,
+    <br>quis nostrud exercitation ullamco
+    <br>laboris nisi ut aliquip ex ea commodo consequat.
+    <br>Duis aute irure dolor in reprehenderit
+    <br>in voluptate velit esse cillum
+    <br>dolore eu fugiat nulla pariatur.
+    <br>Excepteur sint occaecat cupidatat
+    <br>non proident, sunt in culpa
+    <br>qui officia deserunt mollit
+    <br>anim id est laborum.
+    lorem ipsum dolor sit amet,
+    <br>consectetur adipiscing elit.
+    <br>Sed do eiusmod tempor incididunt
+    <br>ut labore et dolore magna aliqua.
+    <br>Ut enim ad minim veniam,
+    <br>quis nostrud exercitation ullamco
+    <br>laboris nisi ut aliquip ex ea commodo consequat.
+    <br>Duis aute irure dolor in reprehenderit
+    <br>in voluptate velit esse cillum
+    <br>dolore eu fugiat nulla pariatur.
+    <br>Excepteur sint occaecat cupidatat
+    <br>non proident, sunt in culpa
+    <br>qui officia deserunt mollit
+    <br>anim id est laborum.
+</aside>
 <main>
     <th:block th:replace="${body}"></th:block>
 </main>

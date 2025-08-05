@@ -26,31 +26,32 @@ public class Render {
         }
 
         var templateEngine = new TemplateEngine();
-        var resolver = new FileTemplateResolver();
 
+        var resolver = new FileTemplateResolver();
         resolver.setPrefix(cleanPrefix(templatesFolder));
         resolver.setSuffix(".html");
         resolver.setCacheable(true);
         resolver.setName("Main Resolver");
         resolver.setTemplateMode("HTML");
         resolver.setCharacterEncoding("UTF-8");
-
         templateEngine.addTemplateResolver(resolver);
+
+        var linkBuilder = new OfflineLinkBuilder(System.getProperty("renderer.base_url", "/"));
+        templateEngine.setLinkBuilder(linkBuilder);
 
         Util.clearOutputFolder(outFolder);
 
+        var context = new Context();
         try (var stream = Files.walk(Path.of(templatesFolder).resolve("pages"))) {
             stream.parallel()
                     .filter(Files::isRegularFile)
                     .forEach(path -> {
                         var relativePath = Path.of(templatesFolder).relativize(path);
                         var templateName = relativePath.toString().replace('\\', '/');
-                        var spec = new TemplateSpec(templateName, TemplateMode.HTML);
                         LOGGER.info("Processing template: {}", templateName);
                         try {
-                            var context = new Context();
                             try (var writer = Files.newBufferedWriter(outFolder.resolve(relativePath.getFileName()))) {
-                                templateEngine.process(spec, context, writer);
+                                templateEngine.process(templateName, context, writer);
                             }
                         } catch (IOException e) {
                             throw new RuntimeException("Failed to process template: " + templateName, e);
