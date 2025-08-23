@@ -38,11 +38,16 @@ public class ConvertMarkdown {
         try (var stream = Files.walk(inFolder)) {
             stream.forEach(path -> {
                 if (!Files.isRegularFile(path) || !path.toString().endsWith(".md")) return;
-                var outPath = outFolder.resolve(path.getFileName().toString().replace(".md", ".html"));
+                var relativePath = inFolder.relativize(path);
+                var modifiedFileName = relativePath.getFileName().toString().replaceAll("\\.md$", ".html");
+                var outPath = outFolder.resolve(relativePath.resolveSibling(modifiedFileName));
 
-                try (var reader = Files.newBufferedReader(path); var writer = Files.newBufferedWriter(outPath)) {
-                    var document = PARSER.parseReader(reader);
-                    RENDERER.render(document, writer);
+                try {
+                    Files.createDirectories(outPath.getParent());
+                    try (var reader = Files.newBufferedReader(path); var writer = Files.newBufferedWriter(outPath)) {
+                        var document = PARSER.parseReader(reader);
+                        RENDERER.render(document, writer);
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to process file: " + path, e);
                 }

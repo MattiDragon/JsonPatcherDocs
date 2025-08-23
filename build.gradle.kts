@@ -170,7 +170,7 @@ val convertMarkdown by tasks.registering(JavaExec::class) {
     classpath(tooling)
     mainClass = "dev.mattidragon.jsonpatcher.docgen.ConvertMarkdown"
 
-    val inDir = layout.projectDirectory.dir("src/docs")
+    val inDir = layout.projectDirectory.dir("src/md_pages")
     val outDir = layout.buildDirectory.dir("md_docs")
 
     args(
@@ -189,8 +189,8 @@ val copyTemplates by tasks.registering(Sync::class) {
     from(layout.buildDirectory.file("code_docs")) {
         into("code_docs")
     }
-    from(convertMarkdown.get().outputs.files) {
-        into("manual_docs")
+    from(convertMarkdown.get().outputs.files.singleFile) {
+        into("pages")
     }
     from(layout.projectDirectory.file("src/pages")) {
         into("pages")
@@ -199,7 +199,7 @@ val copyTemplates by tasks.registering(Sync::class) {
     from(layout.projectDirectory.file("src/templates"))
     into(layout.buildDirectory.dir("templates"))
 
-    dependsOn(genDocs)
+    dependsOn(genDocs, convertMarkdown)
 }
 
 val renderDocumentation by tasks.registering(JavaExec::class) {
@@ -265,7 +265,8 @@ tasks.register<Exec>("serve") {
 
     args(
         "-d", contentDir.get().asFile,
-        "-p", "8080"
+        "-p", "8080",
+        "-b", "::"
     )
 
     inputs.dir(contentDir)

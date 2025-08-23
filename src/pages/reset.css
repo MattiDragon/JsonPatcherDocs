@@ -4,7 +4,11 @@
     padding: 0;
 }
 
-ul {
+:root {
+    line-height: 1.5;
+}
+
+ul, ol {
     padding-inline-start: 20px;
 }
 
@@ -22,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 2.25em;
 
     &::after {
         height: 2px;
@@ -45,6 +49,10 @@ h4 {
     font-size: 1.25em;
 }
 
-p {
+p, ul {
     margin-bottom: 1rem;
+}
+
+p:has(+ ul, + ol) {
+    margin-bottom: 0;
 }
