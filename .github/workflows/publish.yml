@@ -17,7 +17,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew build -Pbase_url=https://mattidragon.github.io/JsonPatcherDocs
+        run: ./gradlew build -Pbase_url=https://jsonpatcher-docs.mattidragon.dev
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
