@@ -7,6 +7,7 @@
     --text-color: light-dark(#000, #ddd);
     --accent-color: light-dark(#1ea81e, #145d14);
     --link-color: light-dark(#145d14, #1ea81e);
+    --beta-color: #efbe2a;
 
     color: var(--text-color);
     background-color: var(--background-color);
@@ -88,6 +89,18 @@ tr:nth-child(even) {
     background-color: var(--background-color-1);
 }
 
+.beta-tag {
+    font-size: 0.5em;
+    background-color: var(--beta-color);
+    padding: 1px 2px;
+    margin-inline-start: 0.25em;
+    border-radius: 4px;
+    vertical-align: super;
+    color: black;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
 @media screen and (width < 800px) {
     .docs-page > aside {
         position: relative;
@@ -115,6 +128,12 @@ tr:nth-child(even) {
     }
 
     .docs-page:not(:has(> header > #nav-sidebar-checkbox:checked)) > aside {
+        display: none;
+    }
+}
+
+@media screen and (width < 350px) {
+    .docs-page > header > .docs-title {
         display: none;
     }
 }
