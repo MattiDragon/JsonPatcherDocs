@@ -46,6 +46,7 @@ public class ConvertMarkdown {
                     Files.createDirectories(outPath.getParent());
                     try (var reader = Files.newBufferedReader(path); var writer = Files.newBufferedWriter(outPath)) {
                         var document = PARSER.parseReader(reader);
+                        writer.write("<!DOCTYPE html>\n");
                         RENDERER.render(document, writer);
                     }
                 } catch (IOException e) {
