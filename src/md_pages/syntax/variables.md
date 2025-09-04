@@ -12,7 +12,7 @@ You should prefer immutable variables when possible.
 Variables are defined with the `var` and `val` keywords, for mutable and immutable variables respectively.
 After the keyword you specify the name of the variable and then assign a value to it.
 
-```py
+```jsonpatcher
 var a = 1;
 val b = 2;
 

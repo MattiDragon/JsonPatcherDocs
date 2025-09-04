@@ -8,7 +8,7 @@ They allow you to reuse code and make it easier to read and understand.
 ## Calling Functions
 Functions are called by using parentheses with arguments inside after a function reference. 
 The reference can be a variable, a property on an object, the result of a function call, or any other value.
-```py
+```jsonpatcher
 math.sin(1);
 ```
 
@@ -16,7 +16,7 @@ math.sin(1);
 Functions are defined by the function keyword, followed by a name, a list of arguments, and a body.
 The function will be bound to an immutable variable with the specified name.
 Functions can also be defined with arrow syntax. The arrow syntax is an expression and will return the function.
-```py
+```jsonpatcher
 function add(a, b) {
     return a + b;
 }
@@ -39,7 +39,7 @@ The last argument in a function may optionally be followed by `*`. This indicate
 When calling the function, all extra arguments at the end will be collected into an array and passed to the function as this parameter.
 Varargs arguments are considered optional, and can thus appear after other optional arguments.
 
-```py
+```jsonpatcher
 function example(
     a,
     b = math.sin(5), # Default values can be any expression

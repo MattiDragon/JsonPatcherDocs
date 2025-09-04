@@ -90,7 +90,7 @@ All assignment operators return the assigned value, although utilizing this ofte
 Assignment can be combined with other infix operators, except for shorting boolean operators and comparison operators, to create compound assignment operators.
 They work by applying the other operator on the variable and the value and then assigning the result to the variable.
 
-```py
+```jsonpatcher
 var a = 1;
 a = 2; # a is now 2
 a += 3; # a is now 5
@@ -103,7 +103,7 @@ The in operator is used to check if a key is present in an object or if a value 
 It is a binary infix operator with the syntax `key in object` or `value in array`.
 It returns a boolean. Note that this compares the identity of objects and arrays like the equality operators.
 
-```py
+```jsonpatcher
 var a = [1, 2, 3];
 1 in a; # true
 4 in a; # false
@@ -120,7 +120,7 @@ It might look like an infix operator, but it's actually a prefix operator.
 The available types are: `number`, `string`, `boolean`, `null`, `array`, `object`, `function`.
 These are not values (besides null) and can't be used outside the is operator. You also can't use a variable as the type.
 
-```py
+```jsonpatcher
 var a = 1;
 a is number; # true
 a is string; # false
@@ -133,7 +133,7 @@ When the key you want to access is dynamic you can use a variable with the brack
 This is also how you access arrays, albeit with numeric keys. 
 All these operators form <a th:href="@{/syntax/index.html#references}">references</a> which can be used in operators that assign values.
 
-```py
+```jsonpatcher
 var a = {a: 1, b: 2};
 a.a; # 1
 a["b"]; # 2
@@ -150,7 +150,7 @@ It can be used on any value, but will error if it's not a function.
 You can pass arguments as a comma separated list in the parentheses.
 For more information on functions see <a th:href="@{/syntax/functions.html}>Functions</a>.
 
-```py
+```jsonpatcher
 function a() {
     return 1;
 };
@@ -171,7 +171,7 @@ These operators have to be used on <a th:href="@{/syntax/index.html#references}"
 If they are used as prefix operators, they return the value before modification.
 If they are used as postfix operators, they return the value after modification.
 
-```py
+```jsonpatcher
 var a = 1;
 ++a; # 2
 a++; # 2
@@ -186,7 +186,7 @@ b; # false
 Arrays and strings can be multiplied with numbers. 
 This creates a new array or string with the original repeated the specified number of times.
 
-```py
+```jsonpatcher
 var a = [1, 2, 3];
 a * 3; # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 
@@ -199,7 +199,7 @@ Arrays, strings and objects can be concatenated with the `+` operator.
 For arrays and strings, this creates a new array or string with the original and the second concatenated.
 For objects, this creates a new object with the keys and values from both objects, where the second object overwrites any keys that are present in both.
 
-```py
+```jsonpatcher
 var a = [1, 2, 3];
 var b = [4, 5, 6];
 a + b; # [1, 2, 3, 4, 5, 6]

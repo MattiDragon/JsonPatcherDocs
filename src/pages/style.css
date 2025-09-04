@@ -43,6 +43,7 @@ pre:has(code:only-child) {
     outline: 2px solid var(--background-color-2);
     border-radius: 3px;
     padding: 4px;
+    font-size: 0.8em;
 
     overflow-x: auto;
 }

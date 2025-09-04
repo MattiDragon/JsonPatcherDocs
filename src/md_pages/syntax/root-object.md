@@ -11,7 +11,7 @@ The `$` syntax is used to get the root object.
 It can be used like any expression, but it isn't a <a th:href="@{/syntax/index.html#references}">reference</a>.
 It can be used as a function parameter, but it can't be assigned to.
 
-```py
+```jsonpatcher
 val root = $; # You can store the root object in a variable
 
 function a() {
@@ -25,14 +25,14 @@ apply ($) { # You can use the root object as the root object (don't do this)
 ## Implicit Property Access
 When accessing a property of the root object you can omit the dot.
 This changes nothing functionally, but makes your code a bit more readable.
-```py
+```jsonpatcher
 $a; # This is the same as $.a
 ```
 
 ## Apply Statements
 Apply statements allow you to execute code with a different root.
 This is useful if you have a large piece of code that has to act on a specific part of the json.
-```py
+```jsonpatcher
 apply (a) {
     $b; # This will return the value of a.b
 }

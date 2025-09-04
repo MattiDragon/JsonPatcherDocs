@@ -4,10 +4,10 @@
 # If, Else and Blocks
 ## Blocks
 Blocks in the JsonPatcher language work like they do in most languages with c-like syntax.
-They are declared with curly braces and act as their own scope for <a th:href="@{/syntax/variables}>variables</a>. 
+They are declared with curly braces and act as their own scope for <a th:href="@{/syntax/variables}">variables</a>. 
 Blocks inherit variables from blocks outside them.
 
-```py
+```jsonpatcher
 { # A block
     var a = 1;
     {
@@ -22,7 +22,7 @@ Blocks inherit variables from blocks outside them.
 The if statement is used to execute code conditionally. It consists of a condition and a body.
 The syntax is the same as in most languages with c-like syntax. The body is executed if the condition is true.
 
-```py
+```jsonpatcher
 var a = 1;
 if (a == 1) {
     # This will be executed
@@ -31,7 +31,7 @@ if (a == 1) {
 
 The else statement can be used to execute code if the condition is false.
 
-```py
+```jsonpatcher
 var a = 1;
 if (a == 2) {
     # This won't be executed
@@ -42,7 +42,7 @@ if (a == 2) {
 
 The else statement can also be used with an if statement to chain multiple conditions.
 
-```py
+```jsonpatcher
 var a = 1;
 if (a == 2) {
     # This won't be executed

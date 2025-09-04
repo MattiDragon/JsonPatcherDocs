@@ -11,7 +11,7 @@ The version tag is used to specify what version of JsonPatcher the patch is for.
 This is important because the language may change in the future, and patches may not work with future versions.
 The version tag is required for all patches. Currently only version 1 is supported.
 
-```py
+```jsonpatcher
 @version 1;
 ```
 
@@ -21,7 +21,7 @@ It can be a string, an object, or an array of strings and objects.
 If the target is an array, the patch will apply to all files that match any of the selectors in the array.
 
 When the target is a string, it's directly matched against the identifier of the potential target file.
-```py
+```jsonpatcher
 @target "minecraft:recipes/stick.json";
 ```
 
@@ -34,7 +34,7 @@ The `regex` field checks the path of the target file against a regular expressio
 It should be a string. If the path matches the regex, the patch will apply.
 This has quite bad performance, so it's recommended to use `begin` and `end` instead where possible.
 These properties are all optional and are combined with a logical and. An empty object is not allowed.
-```py
+```jsonpatcher
 @target {
     "namespace": "minecraft",
     "path": {
@@ -46,7 +46,7 @@ These properties are all optional and are combined with a logical and. An empty 
 
 When the target is an array, it's elements are treated as targets.
 If any of them match, the patch will apply.
-```py
+```jsonpatcher
 @target [
     "minecraft:recipes/stick.json",
     {
@@ -62,7 +62,7 @@ If any of them match, the patch will apply.
 ## Enabled
 The enabled tag can be used to disable a patch.
 It's value should be a boolean. If it's `false`, the patch will not be applied.
-```py
+```jsonpatcher
 @enabled false;
 ```
 This is useful the debugging as you don't have to comment out the entire patch or rename the file to disable it.
@@ -73,7 +73,7 @@ Metapatches are patches that instead of patching files, creates and deletes them
 This is useful for dynamically generating files or copying them around.
 The contents of the tag are ignored, and it's recommended to be left empty.
 See <a th:href="@{/language/metapatch.html}>Metapatches</a> for more information.
-```py
+```jsonpatcher
 @metapatch;
 ```
 
@@ -81,7 +81,7 @@ See <a th:href="@{/language/metapatch.html}>Metapatches</a> for more information
 The priority tag is used to specify the priority of the patch.
 It's value should be a number. Higher numbers apply later.
 The default priority is 0. Metapatches have a separate priority.
-```py
+```jsonpatcher
 @priority 1; # This patch will apply after patches with priority 0
 ```
 Priority is useful for making sure patches apply in the correct order.

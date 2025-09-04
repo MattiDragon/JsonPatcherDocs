@@ -10,7 +10,12 @@
     <link rel="stylesheet" th:href="@{/layout.css}">
     <link rel="stylesheet" th:href="@{/reset.css}">
     <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/themes/prism.min.css">
     <link rel="icon" type="image/png" th:href="@{/icon.png}">
+
+    <script defer src="https://unpkg.com/prismjs@1.30.0/components/prism-core.min.js"></script>
+    <script defer src="https://unpkg.com/prismjs@1.30.0/components/prism-json.min.js"></script>
+    <script defer th:src="@{/js/prism-lang-jsonpatcher.js}"></script>
 </head>
 <body class="docs-page">
 <header>
