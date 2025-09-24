@@ -102,6 +102,17 @@ tr:nth-child(even) {
     text-transform: lowercase;
 }
 
+footer > section {
+    > h1 {
+        font-size: 1em;
+        margin: 0;
+
+        &::after {
+            content: none;
+        }
+    }
+}
+
 @media screen and (width < 800px) {
     .docs-page > aside {
         position: relative;

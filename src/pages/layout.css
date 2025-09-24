@@ -3,7 +3,7 @@
     grid-template-areas: "header header header"
                          "sidebar content ."
                          "footer footer footer";
-    grid-template-rows: 3rem 1fr 5rem;
+    grid-template-rows: 3rem 1fr auto;
     grid-template-columns: 1fr minmax(auto, 1200px) 1fr;
     min-height: 100svh;
 
@@ -55,9 +55,20 @@
     }
 
     > footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 3rem;
+
         grid-area: footer;
+
         padding: 10px;
-        text-align: center;
         background-color: var(--background-color-1);
+        text-align: center;
+
+        > section {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }
