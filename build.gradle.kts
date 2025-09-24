@@ -32,9 +32,6 @@ abstract class GenDocs : JavaExec() {
         classpath(project.configurations["cli"])
         mainModule = "jsonpatcher.tools.cli"
 
-        // TODO: remove once stdlib is fixed
-        isIgnoreExitValue = true
-
         args(
             "docs",
             "--format", "HTML",
