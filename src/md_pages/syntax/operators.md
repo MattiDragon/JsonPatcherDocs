@@ -4,7 +4,7 @@
 # Operators
 This page has a list of all operators for quick lookup. 
 It's worth to read the [precedence section](#precedence) to understand how operators interact with each other.
-More info on some operators is available at the <a th:href="@{language/types.html}>types page</a>.
+More info on some operators is available at the <a th:href="@{language/types.html}">types page</a>.
 
 ## Table of Contents
 * [Table of Contents](#table-of-contents)

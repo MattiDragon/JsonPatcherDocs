@@ -1,0 +1,13 @@
+Layout plan:
+- Home page
+- Getting started
+  - Writing first patch
+  - Scripts v. patches
+  - Script and patch tutorial
+- Language
+  - Types
+  - *Concepts like the root object?*
+- Syntax
+  - *Pages for all concepts*
+- Stdlib
+- Example scripts
