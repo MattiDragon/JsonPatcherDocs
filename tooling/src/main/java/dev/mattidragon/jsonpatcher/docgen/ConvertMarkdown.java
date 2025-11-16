@@ -15,10 +15,10 @@ import java.util.List;
 
 public class ConvertMarkdown {
     private static final List<Extension> EXTENSIONS = Arrays.asList(StrikethroughExtension.create(), TablesExtension.create());
-    private static final Parser PARSER = Parser.builder()
+    public static final Parser PARSER = Parser.builder()
             .extensions(EXTENSIONS)
             .build();
-    private static final HtmlRenderer RENDERER = HtmlRenderer.builder()
+    public static final HtmlRenderer RENDERER = HtmlRenderer.builder()
             .extensions(EXTENSIONS)
             .build();
 

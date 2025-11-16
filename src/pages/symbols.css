@@ -1,0 +1,11 @@
+.doc-object, .doc-property {
+    margin-inline-start: 2rem;
+
+    @media screen and (width < 1000px) {
+        margin-inline-start: 1rem;
+    }
+
+    @media screen and (width < 500px) {
+        margin-inline-start: 0.5rem;
+    }
+}

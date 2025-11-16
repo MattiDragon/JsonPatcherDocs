@@ -8,6 +8,9 @@ module jsonpatcher.docs.tooling {
     requires org.commonmark;
     requires org.commonmark.ext.gfm.strikethrough;
     requires org.commonmark.ext.gfm.tables;
+    requires jsonpatcher.tools.doctool;
+    requires jsonpatcher.lang.parser;
+    requires jsonpatcher.lang.ast;
 
     exports dev.mattidragon.jsonpatcher.docgen;
 }

@@ -1,16 +1,20 @@
 package dev.mattidragon.jsonpatcher.docgen;
 
+import dev.mattidragon.jsonpatcher.docs.DocCommentHandler;
+import dev.mattidragon.jsonpatcher.docs.tree.DocTree;
+import dev.mattidragon.jsonpatcher.docs.type.DocType;
+import dev.mattidragon.jsonpatcher.docs.write.DocTypeWriter;
+import dev.mattidragon.jsonpatcher.lang.ast.meta.TreeMetadata;
+import dev.mattidragon.jsonpatcher.lang.error.DiagnosticsBuilder;
+import dev.mattidragon.jsonpatcher.lang.parse.Lexer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Render {
     private static final Logger LOGGER = LoggerFactory.getLogger("Site Renderer");
@@ -19,33 +23,41 @@ public class Render {
         var args = new ArrayList<>(Arrays.asList(argArray));
         var templatesFolder = args.removeFirst();
         var outFolder = Path.of(args.removeFirst());
-        if (!args.isEmpty()) {
-            throw new IllegalArgumentException("Unexpected arguments: " + args);
+        var codeDocs = new HashMap<String, Set<Path>>();
+        while (!args.isEmpty()) {
+            if (!args.removeFirst().equals("-c")) {
+                throw new IllegalArgumentException("Unexpected arguments: " + Arrays.toString(argArray));
+            }
+            var name = args.removeFirst();
+            var path = Path.of(args.removeFirst());
+            codeDocs.computeIfAbsent(name, n -> new TreeSet<>())
+                    .add(path);
         }
 
-        var templateEngine = new TemplateEngine();
-
-        var resolver = new FileTemplateResolver();
-        resolver.setPrefix(cleanPrefix(templatesFolder));
-        resolver.setSuffix(".html");
-        resolver.setCacheable(true);
-        resolver.setName("Main Resolver");
-        resolver.setTemplateMode("HTML");
-        resolver.setCharacterEncoding("UTF-8");
-        templateEngine.addTemplateResolver(resolver);
-
-        var linkBuilder = new OfflineLinkBuilder(System.getProperty("renderer.base_url", "/"));
-        templateEngine.setLinkBuilder(linkBuilder);
-
+        var templateEngine = Util.prepareTemplateEngine(templatesFolder);
         Util.clearOutputFolder(outFolder);
 
+        var docTrees = new HashMap<String, DocTree>();
+        for (var entry : codeDocs.entrySet()) {
+            LOGGER.info("Preparing doctree '{}'", entry.getKey());
+            docTrees.put(entry.getKey(), buildDocTree(entry.getValue()));
+        }
+
         var context = new Context();
+        context.setVariable("trees", docTrees);
+        context.setVariable("mdRenderer", ConvertMarkdown.RENDERER);
+        context.setVariable("mdParser", ConvertMarkdown.PARSER);
+        context.setVariable("util", new Object() {
+            public String formatDocType(DocType type) {
+                return DocTypeWriter.write(type);
+            }
+        });
 
         var templatesPath = Path.of(templatesFolder);
         var pagesPath = templatesPath.resolve("pages");
 
         try (var stream = Files.walk(pagesPath)) {
-            stream.parallel()
+            stream/*.parallel()*/
                     .filter(Files::isRegularFile)
                     .forEach(path -> {
                         var templateName = templatesPath.relativize(path).toString().replace('\\', '/');
@@ -64,13 +76,14 @@ public class Render {
         LOGGER.info("Documentation generation completed successfully.");
     }
 
-    private static String cleanPrefix(String prefix) {
-        if (prefix.endsWith("/")) {
-            return prefix;
-        } else if (prefix.endsWith("\\")) {
-            return prefix.substring(0, prefix.length() - 1) + "/";
-        } else {
-            return prefix + "/";
+    private static DocTree buildDocTree(Iterable<Path> paths) throws IOException {
+        var diagnostics = new DiagnosticsBuilder();
+        var metadata = new TreeMetadata();
+        var commentHandler = new DocCommentHandler(diagnostics, metadata);
+        for (var file : paths) {
+            var code = Files.readString(file);
+            Lexer.lex(code, file.toString(), diagnostics, commentHandler);
         }
+        return new DocTree(commentHandler.entries());
     }
 }

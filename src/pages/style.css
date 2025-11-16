@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
 
     &::after {
-        content: '';
+        /*content: '';*/
         position: absolute;
         height: 2px;
         inset-block-end: .2em;
@@ -35,7 +35,9 @@ a, a:visited {
     background-color: var(--background-color-1);
     outline: 2px solid var(--background-color-2);
     border-radius: 3px;
-    padding-inline: .2em;
+    padding-inline: .1em;
+    margin-inline: 2px;
+    font-weight: normal;
 }
 
 pre:has(code:only-child) {
@@ -91,6 +93,9 @@ tr:nth-child(even) {
 }
 
 .beta-tag {
+    /* Gets rid of leading space */
+    display: inline-block;
+
     font-size: 0.5em;
     background-color: var(--beta-color);
     padding: 1px 2px;

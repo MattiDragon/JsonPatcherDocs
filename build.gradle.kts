@@ -11,57 +11,7 @@ val mod: Configuration by configurations.creating {
     isCanBeResolved = true
     isTransitive = false
 }
-val cli: Configuration by configurations.creating {
-    attributes {
-        attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
-    }
-}
 val tooling: Configuration by configurations.creating
-
-abstract class GenDocs : JavaExec() {
-    @get:PathSensitive(PathSensitivity.RELATIVE)
-    @get:InputFiles
-    abstract val inputFiles: ConfigurableFileCollection
-    @get:OutputFile
-    abstract val outputFile: RegularFileProperty
-
-    init {
-        group = "documentation"
-        description = "Generates HTML documentation from JsonPatcher files."
-
-        classpath(project.configurations["cli"])
-        mainModule = "jsonpatcher.tools.cli"
-
-        args(
-            "docs",
-            "--format", "HTML",
-            "join"
-        )
-        argumentProviders.add {
-            listOf(
-                "-o", outputFile.get().asFile.toString(),
-                *inputFiles.asFileTree.filter { it.isFile }.map(File::toString).sorted().toTypedArray()
-            )
-        }
-
-        doFirst {
-            outputFile.get().asFile.parentFile.mkdirs()
-        }
-        doLast {
-            if (outputFile.get().asFile.length() == 0L) {
-                outputFile.get().asFile.writeText("<p>No documentation available.</p>\n")
-            }
-        }
-    }
-
-    override fun exec() {
-        if (inputFiles.asFileTree.filter { it.isFile }.isEmpty) {
-            outputFile.asFile.get().writeText("")
-        } else {
-            super.exec()
-        }
-    }
-}
 
 fun Sync.configureExtractTask(configuration: Configuration, segmentsToDrop: Int = 1, filter: PatternFilterable.() -> Unit) {
     group = "documentation"
@@ -85,7 +35,6 @@ repositories {
 }
 
 dependencies {
-    cli(libs.jsonpatcher.tools.cli)
     tooling(project(":tooling"))
 
     stdlib(libs.jsonpatcher.lang.stdlib)
@@ -94,63 +43,31 @@ dependencies {
 
 val extractStdlib by tasks.registering(Sync::class) {
     configureExtractTask(stdlib) {
-        include("stdlib/*")
+        include("stdlib/*.jsonpatch")
         exclude("stdlib/internal_docs.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/stdlib"))
 }
 
-val genStdlibDocs by tasks.registering(GenDocs::class) {
-    inputFiles.from(extractStdlib.get().outputs.files)
-    outputFile = layout.buildDirectory.file("code_docs/stdlib.html")
-}
-
 val extractModDocs by tasks.registering(Sync::class) {
     configureExtractTask(mod) {
-        include("docs/*")
+        include("docs/*.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/general"))
 }
 
-val genModDocs by tasks.registering(GenDocs::class) {
-    inputFiles.from(extractModDocs.get().outputs.files)
-    outputFile = layout.buildDirectory.file("code_docs/mod.html")
-}
-
 val extractModDataDocs by tasks.registering(Sync::class) {
     configureExtractTask(mod, 3) {
-        include("data/*/jsonpatch/**")
+        include("data/*/jsonpatch/**.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/data"))
 }
 
-val genModDataDocs by tasks.registering(GenDocs::class) {
-    inputFiles.from(extractModDataDocs.get().outputs.files)
-    outputFile = layout.buildDirectory.file("code_docs/mod-data.html")
-}
-
 val extractModAssetDocs by tasks.registering(Sync::class) {
     configureExtractTask(mod, 3) {
-        include("assets/*/jsonpatch/**")
+        include("assets/*/jsonpatch/**.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/assets"))
-}
-
-val genModAssetDocs by tasks.registering(GenDocs::class) {
-    inputFiles.from(extractModAssetDocs.get().outputs.files)
-    outputFile = layout.buildDirectory.file("code_docs/mod-assets.html")
-}
-
-val genDocs by tasks.registering {
-    group = "documentation"
-    description = "Generates all documentation files from JsonPatcher code."
-
-    dependsOn(
-        genStdlibDocs,
-        genModDocs,
-        genModDataDocs,
-        genModAssetDocs
-    )
 }
 
 val extractFavicon by tasks.registering(Sync::class) {
@@ -183,9 +100,6 @@ val copyTemplates by tasks.registering(Sync::class) {
     group = "documentation"
     description = "Prepares templates for rendering documentation."
 
-    from(layout.buildDirectory.file("code_docs")) {
-        into("code_docs")
-    }
     from(convertMarkdown.get().outputs.files.singleFile) {
         into("pages")
     }
@@ -196,12 +110,12 @@ val copyTemplates by tasks.registering(Sync::class) {
     from(layout.projectDirectory.file("src/templates"))
     into(layout.buildDirectory.dir("templates"))
 
-    dependsOn(genDocs, convertMarkdown)
+    dependsOn(convertMarkdown)
 }
 
 val renderDocumentation by tasks.registering(JavaExec::class) {
     group = "documentation"
-    description = "Renders the documentation using the templates and generated files."
+    description = "Renders the documentation using the templates."
 
     classpath(tooling)
     mainClass = "dev.mattidragon.jsonpatcher.docgen.Render"
@@ -213,6 +127,17 @@ val renderDocumentation by tasks.registering(JavaExec::class) {
         inDir.singleFile,
         outDir.get().asFile
     )
+    argumentProviders.add {
+        mapOf("stdlib" to extractStdlib, "mod" to extractModDocs, "data" to extractModDataDocs, "assets" to extractModAssetDocs)
+            .mapValues { (_, task) ->
+                task.get().outputs.files.asFileTree.files.map { it.toString() }
+            }
+            .flatMap { (name, files) ->
+                files.flatMap {
+                    file -> listOf("-c", name, file)
+                }
+            }
+    }
 
     jvmArgumentProviders.add {
         project.property("base_url")?.let {
@@ -226,6 +151,7 @@ val renderDocumentation by tasks.registering(JavaExec::class) {
     inputs.dir(inDir.singleFile)
     inputs.property("base_url", project.property("base_url") ?: "")
     dependsOn(copyTemplates)
+    dependsOn(extractStdlib, extractModDocs, extractModDataDocs, extractModAssetDocs)
 }
 
 val joinSite by tasks.registering(Sync::class) {

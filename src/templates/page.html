@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="page(title, body)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="page(title, body)"
+      th:with="extraHead=${extraHead} ? ${extraHead} : ~{}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,6 +12,8 @@
     <link rel="stylesheet" th:href="@{/layout.css}">
     <link rel="stylesheet" th:href="@{/reset.css}">
     <link rel="stylesheet" th:href="@{/style.css}">
+    <th:block th:replace="${extraHead}"></th:block>
+
     <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/themes/prism.min.css">
     <link rel="icon" type="image/png" th:href="@{/icon.png}">
 
@@ -20,7 +24,7 @@
 <body class="docs-page">
 <header>
     <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
-    <span class="docs-title">JsonPatcher Docs<span class="beta-tag">beta</span></span>
+    <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
 </header>
 <aside id="nav-sidebar">
     <nav class="vertical-nav">

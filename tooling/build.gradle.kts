@@ -8,6 +8,7 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.jsonpatcher.tools.docs)
     implementation(libs.bundles.commonmark)
     implementation(libs.thymeleaf)
     implementation(libs.slf4j.api)

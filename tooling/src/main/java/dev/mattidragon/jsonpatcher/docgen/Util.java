@@ -1,6 +1,8 @@
 package dev.mattidragon.jsonpatcher.docgen;
 
 import org.jspecify.annotations.Nullable;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -24,5 +26,32 @@ class Util {
             }
         });
         Files.createDirectories(outFolder);
+    }
+
+    static String cleanTemplatePrefix(String prefix) {
+        if (prefix.endsWith("/")) {
+            return prefix;
+        } else if (prefix.endsWith("\\")) {
+            return prefix.substring(0, prefix.length() - 1) + "/";
+        } else {
+            return prefix + "/";
+        }
+    }
+
+    static TemplateEngine prepareTemplateEngine(String templatesFolder) {
+        var templateEngine = new TemplateEngine();
+
+        var resolver = new FileTemplateResolver();
+        resolver.setPrefix(cleanTemplatePrefix(templatesFolder));
+        resolver.setSuffix(".html");
+        resolver.setCacheable(true);
+        resolver.setName("Main Resolver");
+        resolver.setTemplateMode("HTML");
+        resolver.setCharacterEncoding("UTF-8");
+        templateEngine.addTemplateResolver(resolver);
+
+        var linkBuilder = new OfflineLinkBuilder(System.getProperty("renderer.base_url", "/"));
+        templateEngine.setLinkBuilder(linkBuilder);
+        return templateEngine;
     }
 }

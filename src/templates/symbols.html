@@ -1,0 +1,80 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="extra-css">
+    <link rel="stylesheet" th:href="@{/symbols.css}">
+</th:block>
+<body>
+<!--/*@thymesVar id="tree" type="dev.mattidragon.jsonpatcher.docs.tree.DocTree"*/-->
+<th:block th:fragment="symbol-tree(tree)">
+    <section class="doc-namespace"
+             th:each="namespace : ${tree.namespaces.values()}"
+             th:with="namespaceId=${#strings.listJoin(namespace.description.parts, '.')}"
+             th:id="'namespace:' + ${namespaceId}">
+
+        <th:block th:switch="${namespaceId}">
+            <h2 th:case="''">No namespace</h2>
+            <h2 th:case="*">Namespace <code th:text="${namespaceId}"></code></h2>
+        </th:block>
+
+        <th:block th:if="${namespace.entry} != null" th:insert="~{::entry-description(${namespace.entry})}"></th:block>
+
+        <section class="doc-object"
+                 th:each="object : ${namespace.objects.values()}"
+                 th:with="objectId=${#strings.listJoin(namespace.description.withLast(object.name).parts, '.')}"
+                 th:id="'object:' + ${objectId}">
+            <h3 th:if="${object.entry} == null">
+                Unknown object <code th:text="${object.name}"></code>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$LibraryEntry}">
+                Library <code th:text="${object.name}"></code><th:block th:if="${object.entry.location.isPresent()}">: <code th:text="${object.entry.location.get()}"></code>
+            </th:block>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$GlobalLibraryEntry}">
+                Global library <code th:text="${object.name}"></code>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$GlobalValueEntry}">
+                Global variable <code th:text="${object.name}"></code>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$TypeDeclarationEntry}">
+                Type <code th:text="${object.name}"></code> based on <code th:text="${object.entry.baseType.name.toLowerCase()}"></code>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$TypeAliasEntry}">
+                Type alias <code th:text="${object.name}"></code> = <code th:text="${util.formatDocType(object.entry.definition)}"></code>
+            </h3>
+            <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$MetadataEntry}">
+                Metadata tag <code th:text="'@' + ${object.name}"></code>: <code th:text="${util.formatDocType(object.entry.type)}"></code>
+            </h3>
+
+            <th:block th:if="${object.entry} != null" th:insert="~{::entry-description(${object.entry})}"></th:block>
+
+            <section class="doc-property"
+                     th:each="property : ${object.properties.values()}"
+                     th:with="propertyId=${#strings.listJoin(property.entry.namespace.withLast(property.entry.owner).withLast(property.entry.name).parts, '.')},
+                            isFunction=${property.entry.type instanceof dev.mattidragon.jsonpatcher.docs.type.FunctionDocType}"
+                     th:id="'property:' + ${propertyId}"
+                     th:attr="data-function=${isFunction}">
+                <h4 th:if="${isFunction}">
+                    Function <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                </h4>
+                <h4 th:if="!${isFunction}">
+                    Property <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                </h4>
+
+                <th:block th:if="${property.entry} != null" th:insert="~{::entry-description(${property.entry})}"></th:block>
+            </section>
+        </section>
+    </section>
+</th:block>
+<!--/*@thymesVar id="entry" type="dev.mattidragon.jsonpatcher.docs.data.DocEntry"*/-->
+<th:block th:fragment="entry-description(entry)">
+    <!--/*@thymesVar id="mdRenderer" type="org.commonmark.renderer.html.HtmlRenderer"*/-->
+    <!--/*@thymesVar id="mdParser" type="org.commonmark.parser.Parser"*/-->
+    <th:block th:utext="${mdRenderer.render(mdParser.parse(entry.sharedData.body))}"></th:block>
+    <div class="doc-tag"
+         th:each="tag : ${entry.sharedData.tags}">
+        <th:block th:each="element : ${tag.formattedContent}"
+                  th:utext="${mdRenderer.render(element)}">
+        </th:block>
+    </div>
+</th:block>
+</body>
+</html>

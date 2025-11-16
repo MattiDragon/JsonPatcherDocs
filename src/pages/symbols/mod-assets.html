@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page('Resourcepack Stdlib', ~{::content})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page(title='Resourcepack Stdlib', body=~{::content}, extraHead=~{symbols::extra-css})}">
 <body>
 <th:block th:fragment="content">
     <h1>Resourcepack Library Symbols</h1>
@@ -8,7 +8,12 @@
         available only to patches loaded along with resourcepack files.
         Unless something is otherwise stated, everything here should be available to all code ran by the mod.
     </p>
-    <th:block th:replace="~{code_docs/mod-assets}"></th:block>
+    <th:block th:if="${trees.assets}">
+        <th:block th:replace="~{symbols::symbol-tree(${trees.assets})}"></th:block>
+    </th:block>
+    <p th:unless="${trees.assets}">
+        No symbols available
+    </p>
 </th:block>
 </body>
 </html>
