@@ -76,5 +76,41 @@
         </th:block>
     </div>
 </th:block>
+
+<th:block th:fragment="extra-nav(tree)">
+    <h2 id="symbols-nav-title">Symbols</h2>
+    <nav class="vertical-nav" aria-labelledby="symbols-nav-title">
+        <ul>
+            <li th:each="namespace : ${tree.namespaces.values()}"
+                th:with="namespaceId=${#strings.listJoin(namespace.description.parts, '.')}">
+                <details>
+                    <summary>
+                        <th:block th:switch="${namespaceId}">
+                            <a th:case="''" href="#namespace:">no namespace</a>
+                            <a th:case="*" th:href="'#namespace:' + ${namespaceId}" th:text="${namespaceId}"></a>
+                        </th:block>
+                    </summary>
+                    <ul>
+                        <li th:each="object : ${namespace.objects.values()}"
+                            th:with="objectId=${#strings.listJoin(namespace.description.withLast(object.name).parts, '.')}">
+                            <details>
+                                <summary>
+                                    <a th:href="'#object:' + ${objectId}" th:text="${object.name}"></a>
+                                </summary>
+                                <ul>
+                                    <li th:each="property : ${object.properties.values()}"
+                                        th:with="propertyId=${#strings.listJoin(property.entry.namespace.withLast(property.entry.owner).withLast(property.entry.name).parts, '.')}">
+                                        <a th:href="'#property:' + ${propertyId}" th:text="${property.entry.name}"></a>
+                                    </li>
+                                </ul>
+                            </details>
+                        </li>
+                    </ul>
+                </details>
+
+            </li>
+        </ul>
+    </nav>
+</th:block>
 </body>
 </html>

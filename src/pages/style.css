@@ -50,6 +50,14 @@ pre:has(code:only-child) {
     overflow-x: auto;
 }
 
+#nav-sidebar > hr {
+    margin-block: .5rem;
+}
+
+#nav-sidebar > h2 {
+    font-size: 1em;
+}
+
 .vertical-nav {
     ul {
         padding-inline-start: 2em;

@@ -60,6 +60,10 @@
             </li>
         </ul>
     </nav>
+    <th:block th:if="${extraNav}">
+        <hr>
+        <th:block th:replace="${extraNav}"></th:block>
+    </th:block>
 </aside>
 <main>
     <th:block th:replace="${body}"></th:block>

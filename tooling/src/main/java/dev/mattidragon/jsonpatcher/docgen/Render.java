@@ -51,6 +51,10 @@ public class Render {
             public String formatDocType(DocType type) {
                 return DocTypeWriter.write(type);
             }
+
+            public String locatedDocRef(String ref) {
+                return "";
+            }
         });
 
         var templatesPath = Path.of(templatesFolder);

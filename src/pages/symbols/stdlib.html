@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page(title='Stdlib', body=~{::content}, extraHead=~{symbols::extra-css})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page(title='Stdlib', body=~{::content}, extraHead=~{symbols::extra-css}, extraNav=~{symbols::extra-nav(${trees.stdlib})})}">
 <body>
 <th:block th:fragment="content">
     <h1>Standard Library Symbols</h1>

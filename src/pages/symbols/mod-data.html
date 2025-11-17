@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page(title='Datapack Stdlib', body=~{::content}, extraHead=~{symbols::extra-css})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{page::page(title='Datapack Stdlib', body=~{::content}, extraHead=~{symbols::extra-css}, extraNav=~{symbols::extra-nav(${trees.data})})}">
 <body>
 <th:block th:fragment="content">
     <h1>Datapack Library Symbols</h1>
