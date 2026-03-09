@@ -7,12 +7,16 @@ They're also used by the JsonPatcher language server to determine information ab
 
 A doc comment consists of one or more consecutive lines, all starting with the marker `#|`.
 The first line of a doc comment is known as the header, and specifies what is being documented. 
-Doc comments are completely detached from source code. The processor never cares about where a doc comment is placed, 
-although it's conventional to place them before the thing being documented.
+First in the header is the type of entry being documented. 
+After that follows a dot separated name and then type specific information.
+Generally only the last part of the name is important, as the rest is just used for organization.
 
 After the first line, the body of the comment follows. 
 The body consists of free Markdown markup content describing the thing being documented.
 After the body, tags may optionally be placed to provide additional information in a structured way.
+
+Doc comments are completely detached from source code. The processor never cares about where a doc comment is placed,
+although it's conventional to place them before the thing being documented.
 
 ## Types of Comments
 ### Namespace
