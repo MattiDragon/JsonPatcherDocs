@@ -19,7 +19,7 @@ which will help tremendously with writing patches.
 To create your first patch, check out the ~~Creating a Patch~~ page.
 After that you'll want to learn more about the language.
 Some pages that are a good place to start are:
-* <a th:href="@{/syntax/structure.html}">Structure</a> explains the general structure of programs in the language and defines terms that are used throughout the wiki.
+* <a th:href="@{/syntax/structure.html}">Structure</a> explains the general structure of programs in the language and defines terms that are used throughout the docs.
 * <a th:href="@{/language/types.html}">Types</a> explains the different types in the language and how they work.
 * <a th:href="@{/syntax/operators.html}">Operators</a> explains the different operators in the language. They differ somewhat from other languages, so it's good to know how they work.
 * <a th:href="@{/syntax/root-object.html}">Root Object</a> explains the root object and how it's used. This is an important concept in the JsonPatcher that's not common elsewhere.

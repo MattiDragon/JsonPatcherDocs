@@ -1,7 +1,11 @@
 package dev.mattidragon.jsonpatcher.docgen;
 
 import dev.mattidragon.jsonpatcher.docs.DocCommentHandler;
+import dev.mattidragon.jsonpatcher.docs.data.DocEntry;
 import dev.mattidragon.jsonpatcher.docs.tree.DocTree;
+import dev.mattidragon.jsonpatcher.docs.tree.DocTreeNamespace;
+import dev.mattidragon.jsonpatcher.docs.tree.DocTreeObject;
+import dev.mattidragon.jsonpatcher.docs.tree.DocTreeProperty;
 import dev.mattidragon.jsonpatcher.docs.type.DocType;
 import dev.mattidragon.jsonpatcher.docs.write.DocTypeWriter;
 import dev.mattidragon.jsonpatcher.lang.ast.meta.TreeMetadata;
@@ -47,13 +51,45 @@ public class Render {
         context.setVariable("trees", docTrees);
         context.setVariable("mdRenderer", ConvertMarkdown.RENDERER);
         context.setVariable("mdParser", ConvertMarkdown.PARSER);
-        context.setVariable("util", new Object() {
+        context.setVariable("util", new Object()  {
+            @SuppressWarnings("unused")
             public String formatDocType(DocType type) {
                 return DocTypeWriter.write(type);
             }
 
-            public String locatedDocRef(String ref) {
-                return "";
+            @SuppressWarnings("unused")
+            public Iterable<DocTreeNamespace> sortedNamespaces(DocTree tree) {
+                return tree.namespaces()
+                        .values()
+                        .stream()
+                        .sorted(Comparator.comparing(DocTreeNamespace::description))
+                        .toList();
+            }
+
+            @SuppressWarnings("unused")
+            public Iterable<DocTreeObject> sortedObjects(DocTreeNamespace tree) {
+                return tree.objects()
+                        .values()
+                        .stream()
+                        .sorted(Comparator.<DocTreeObject>comparingInt(obj -> switch (obj.entry()) {
+                            case DocEntry.GlobalEntry globalEntry -> 0;
+                            case DocEntry.LibraryEntry libraryEntry -> 1;
+                            case DocEntry.MetadataEntry metadataEntry -> 2;
+                            case DocEntry.TypeDeclarationEntry typeDeclarationEntry -> 3;
+                            case DocEntry.TypeAliasEntry typeAliasEntry -> 4;
+                            case DocEntry.NamespaceEntry namespaceEntry -> 5;
+                            case null, default -> 6;
+                        }).thenComparing(DocTreeObject::name))
+                        .toList();
+            }
+
+            @SuppressWarnings("unused")
+            public Iterable<DocTreeProperty> sortedProperties(DocTreeObject tree) {
+                return tree.properties()
+                        .values()
+                        .stream()
+                        .sorted(Comparator.comparing(p -> p.entry().name()))
+                        .toList();
             }
         });
 

@@ -34,7 +34,8 @@
         grid-area: sidebar;
         position: sticky;
         top: 0;
-        width: 250px;
+        width: 300px;
+        max-width: 100%;
         height: fit-content;
         padding: 20px;
         background-color: var(--background-color-2);

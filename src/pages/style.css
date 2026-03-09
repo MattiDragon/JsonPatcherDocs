@@ -38,6 +38,9 @@ a, a:visited {
     padding-inline: .1em;
     margin-inline: 2px;
     font-weight: normal;
+    /* workaround prism changing the font to something way too big */
+    /* TODO: make prism not do that */
+    font-family: monospace !important;
 }
 
 pre:has(code:only-child) {
@@ -67,6 +70,23 @@ pre:has(code:only-child) {
 
     > ul {
         padding-inline-start: 0;
+    }
+
+    a.current {
+        position: relative;
+    }
+
+    a.current::before {
+        content: '';
+        display: block;
+        background-color: #ff0000;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        left: -1.5ch;
+        inset-block: 0;
+        margin-block: auto;
+        border-radius: 50%;
     }
 }
 
@@ -100,6 +120,14 @@ tr:nth-child(even) {
     background-color: var(--background-color-1);
 }
 
+tr:has(> td > .empty-row-marker) {
+    height: 1rem;
+
+    > td {
+        display: none;
+    }
+}
+
 .beta-tag {
     /* Gets rid of leading space */
     display: inline-block;
@@ -126,7 +154,7 @@ footer > section {
     }
 }
 
-@media screen and (width < 800px) {
+@media screen and (width < 1000px) {
     .docs-page > aside {
         position: relative;
         grid-area: content;
@@ -161,4 +189,28 @@ footer > section {
     .docs-page > header > .docs-title {
         display: none;
     }
+}
+
+/* Fix prism toolbar positioning */
+div.code-toolbar > .toolbar {
+    top: 0 !important;
+}
+
+.todo-marker {
+    padding-block: 3rem;
+    display: block;
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.todo-marker::before {
+    content: 'TODO';
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 4rem;
+    background-color: #ff0;
+    border: .5rem solid black;
+    border-radius: 1rem;
+    font-style: normal;
 }

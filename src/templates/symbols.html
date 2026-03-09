@@ -6,19 +6,19 @@
 <!--/*@thymesVar id="tree" type="dev.mattidragon.jsonpatcher.docs.tree.DocTree"*/-->
 <th:block th:fragment="symbol-tree(tree)">
     <section class="doc-namespace"
-             th:each="namespace : ${tree.namespaces.values()}"
+             th:each="namespace : ${util.sortedNamespaces(tree)}"
              th:with="namespaceId=${#strings.listJoin(namespace.description.parts, '.')}"
              th:id="'namespace:' + ${namespaceId}">
 
         <th:block th:switch="${namespaceId}">
-            <h2 th:case="''">No namespace</h2>
+            <h2 th:case="''">(no namespace)</h2>
             <h2 th:case="*">Namespace <code th:text="${namespaceId}"></code></h2>
         </th:block>
 
         <th:block th:if="${namespace.entry} != null" th:insert="~{::entry-description(${namespace.entry})}"></th:block>
 
         <section class="doc-object"
-                 th:each="object : ${namespace.objects.values()}"
+                 th:each="object : ${util.sortedObjects(namespace)}"
                  th:with="objectId=${#strings.listJoin(namespace.description.withLast(object.name).parts, '.')}"
                  th:id="'object:' + ${objectId}">
             <h3 th:if="${object.entry} == null">
@@ -47,7 +47,7 @@
             <th:block th:if="${object.entry} != null" th:insert="~{::entry-description(${object.entry})}"></th:block>
 
             <section class="doc-property"
-                     th:each="property : ${object.properties.values()}"
+                     th:each="property : ${util.sortedProperties(object)}"
                      th:with="propertyId=${#strings.listJoin(property.entry.namespace.withLast(property.entry.owner).withLast(property.entry.name).parts, '.')},
                             isFunction=${property.entry.type instanceof dev.mattidragon.jsonpatcher.docs.type.FunctionDocType}"
                      th:id="'property:' + ${propertyId}"
@@ -81,24 +81,24 @@
     <h2 id="symbols-nav-title">Symbols</h2>
     <nav class="vertical-nav" aria-labelledby="symbols-nav-title">
         <ul>
-            <li th:each="namespace : ${tree.namespaces.values()}"
+            <li th:each="namespace : ${util.sortedNamespaces(tree)}"
                 th:with="namespaceId=${#strings.listJoin(namespace.description.parts, '.')}">
                 <details>
                     <summary>
                         <th:block th:switch="${namespaceId}">
-                            <a th:case="''" href="#namespace:">no namespace</a>
+                            <a th:case="''" href="#namespace:">(no namespace)</a>
                             <a th:case="*" th:href="'#namespace:' + ${namespaceId}" th:text="${namespaceId}"></a>
                         </th:block>
                     </summary>
                     <ul>
-                        <li th:each="object : ${namespace.objects.values()}"
+                        <li th:each="object : ${util.sortedObjects(namespace)}"
                             th:with="objectId=${#strings.listJoin(namespace.description.withLast(object.name).parts, '.')}">
                             <details>
                                 <summary>
                                     <a th:href="'#object:' + ${objectId}" th:text="${object.name}"></a>
                                 </summary>
                                 <ul>
-                                    <li th:each="property : ${object.properties.values()}"
+                                    <li th:each="property : ${util.sortedProperties(object)}"
                                         th:with="propertyId=${#strings.listJoin(property.entry.namespace.withLast(property.entry.owner).withLast(property.entry.name).parts, '.')}">
                                         <a th:href="'#property:' + ${propertyId}" th:text="${property.entry.name}"></a>
                                     </li>

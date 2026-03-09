@@ -17,7 +17,7 @@ Strings can be concatenated with `+` and repeated with `*`:
 "Hello, " + "world!" # -> "Hello, world!" 
 "test" * 3 # -> "testtesttest"
 ```
-There's a standard library of functions available for strings. See <a th:href="@{/symbols/stdlib.html#strings}">Standard Library/Strings</a> for more information.
+There's a standard library of functions available for strings. See <a th:href="@{/symbols/stdlib.html#object:strings}">Standard Library/Strings</a> for more information.
 
 ## Numbers
 Numbers are created like in most programming languages. There is only one number type for simplicity: 64-bit floating point numbers.
@@ -61,7 +61,7 @@ The values in an array can be of any type. Arrays can be nested to create multid
 Values from an array can be accessed by index: `array[0]`, `array[index]`.
 Arrays can be concatenated using `+` and repeated with `*` like strings.
 
-There's a standard library of functions available for arrays. See <a th:href="@{/symbols/stdlib.html#arrays}">Standard Library/Arrays</a> for more information.
+There's a standard library of functions available for arrays. See <a th:href="@{/symbols/stdlib.html#object:arrays}">Standard Library/Arrays</a> for more information.
 
 ## Objects
 Objects store a list of key-value pairs.
@@ -78,7 +78,7 @@ There is no standard library for objects (yet).
 ## Functions
 Functions are values that can be passed around and called.
 For more information on functions, see <a th:href="@{/syntax/functions.html}">Functions</a>.
-They have a few standard library functions, viewable at <a th:href="@{/symbols/stdlib.html#functions}">Standard Library/Functions</a>.
+They have a few standard library functions, viewable at <a th:href="@{/symbols/stdlib.html#object:functions}">Standard Library/Functions</a>.
 
 </body>
 </html>

@@ -15,11 +15,15 @@
     <th:block th:replace="${extraHead}"></th:block>
 
     <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/themes/prism.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/plugins/toolbar/prism-toolbar.min.css">
     <link rel="icon" type="image/png" th:href="@{/icon.png}">
 
     <script defer src="https://unpkg.com/prismjs@1.30.0/components/prism-core.min.js"></script>
-    <script defer src="https://unpkg.com/prismjs@1.30.0/components/prism-json.min.js"></script>
+    <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     <script defer th:src="@{/js/prism-lang-jsonpatcher.js}"></script>
+    <script defer th:src="@{/js/fix-current-link.js}"></script>
 </head>
 <body class="docs-page">
 <header>
@@ -30,6 +34,23 @@
     <nav class="vertical-nav">
         <ul>
             <li><a th:href="@{/}">Home</a></li>
+            <li>
+                Getting Started
+                <ul>
+                    <li><a th:href="@{/getting_started/terminology.html}">Terminology</a></li>
+                    <li><a th:href="@{/getting_started/mod_developers.html}">For Mod Developers</a></li>
+                    <li><a th:href="@{/getting_started/modpack_developers.html}">For Modpack Developers</a></li>
+                </ul>
+            </li>
+            <li>
+                Program Types
+                <ul>
+                    <li><a th:href="@{/program_types/regular_patch.html}">Regular Patches</a></li>
+                    <li><a th:href="@{/program_types/metapatch.html}">Metapatches</a></li>
+                    <li><a th:href="@{/program_types/library.html}">Libraries</a></li>
+                    <li><a th:href="@{/program_types/script.html}">Scripts</a></li>
+                </ul>
+            </li>
             <li>
                 <a th:href="@{/syntax/index.html}">Syntax</a>
                 <ul>
@@ -47,6 +68,16 @@
                     <li><a th:href="@{/syntax/root-object.html}">Root Object</a></li>
                     <li><a th:href="@{/syntax/functions.html}">Functions</a></li>
                     <li><a th:href="@{/syntax/variables.html}">Variables</a></li>
+                </ul>
+            </li>
+            <li>
+                Documenting code
+                <ul>
+                    <li><a th:href="@{/docs/doc_comments.html}">Doc Comments</a></li>
+                    <li><a th:href="@{/docs/doc_types.html}">Doc Types</a></li>
+                    <li><a th:href="@{/docs/doc_conditions.html}">Doc Conditions</a></li>
+                    <li><a th:href="@{/docs/meta_comments.html}">Meta Comments</a></li>
+                    <li><a th:href="@{/docs/naming.html}">Naming Conventions</a></li>
                 </ul>
             </li>
             <li>
