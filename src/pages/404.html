@@ -1,0 +1,13 @@
+<html lang="en" th:replace="~{page::page(title='Doc Comments', body=~{::content}, extraHead=~{::extra-head})}">
+<head th:fragment="extra-head">
+    <link rel="stylesheet" th:href="@{/404.css}">
+</head>
+<body th:fragment="content">
+<h1><span class="highlight-404">404</span> Page Not Found</h1>
+<p>
+    The page you were looking for does not seem to exist.
+</p>
+<a class="home-button" th:href="@{/index.html}">Return home</a>
+
+</body>
+</html>

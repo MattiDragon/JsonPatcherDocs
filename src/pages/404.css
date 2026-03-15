@@ -1,0 +1,17 @@
+.highlight-404 {
+    display: block;
+    font-size: 10rem;
+    line-height: 1;
+}
+
+main {
+    text-align: center;
+}
+
+.home-button, .home-button:visited {
+    text-decoration: none;
+    color: var(--text-color);
+    background: var(--accent-color);
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
