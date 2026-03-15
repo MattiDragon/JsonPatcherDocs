@@ -1,6 +1,6 @@
 [versions]
-jsonpatcher-lang = "2.0.0-beta.9"
-jsonpatcher-mod = "2.0.0-beta.8+mc.1.21.1"
+jsonpatcher-lang = "4f8b01364c"
+jsonpatcher-mod = "ced5ab1b7f"
 jspecify = "1.0.0"
 thymeleaf = "3.1.3.RELEASE"
 slf4j = "2.0.17"
@@ -8,8 +8,8 @@ logback = "1.5.15"
 commonmark = "0.24.0"
 
 [libraries]
-jsonpatcher-lang-stdlib = { module = "dev.mattidragon.jsonpatcher:JsonPatcherLang-Stdlib", version.ref = "jsonpatcher-lang" }
-jsonpatcher-tools-docs = { module = "dev.mattidragon.jsonpatcher:JsonPatcher-Docs", version.ref = "jsonpatcher-lang" }
+jsonpatcher-lang-stdlib = { module = "dev.mattidragon.JsonPatcherLang:JsonPatcherLang-Stdlib", version.ref = "jsonpatcher-lang" }
+jsonpatcher-tools-docs = { module = "dev.mattidragon.JsonPatcherLang:JsonPatcher-Docs", version.ref = "jsonpatcher-lang" }
 jsonpatcher-mod = { module = "dev.mattidragon:JsonPatcher", version.ref = "jsonpatcher-mod" }
 
 commonmark-core = { module = "org.commonmark:commonmark", version.ref = "commonmark" }
