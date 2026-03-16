@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/style.css}">
     <th:block th:replace="${extraHead}"></th:block>
 
-    <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/themes/prism.min.css">
+    <link rel="stylesheet" th:href="@{/prism.css}">
     <link rel="stylesheet" href="https://unpkg.com/prismjs@1.30.0/plugins/toolbar/prism-toolbar.min.css">
     <link rel="icon" type="image/png" th:href="@{/icon.png}">
 
@@ -27,9 +27,32 @@
 </head>
 <body class="docs-page">
 <header>
-    <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
+    <div class="nav-sidebar-toggle panel-toggle-checkbox">
+        <svg th:replace="~{icons::list('var(--text-color)')}"></svg>
+        <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
+    </div>
     <a class="skip-to-content" href="#content">Skip to content</a>
     <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
+    <div class="theme-selector-toggle panel-toggle-checkbox">
+        <div class="light-icon" th:insert="~{icons::sun('light-dark(var(--text-color), transparent)')}"></div>
+        <div class="dark-icon" th:insert="~{icons::moon('light-dark(transparent, var(--text-color))')}"></div>
+        <input type="checkbox" id="theme-selector-checkbox" aria-controls="theme-selector" aria-label="Theme selector visible">
+    </div>
+    <div id="theme-selector">
+        <label>
+            <input type="radio" name="theme" value="auto">
+            Auto
+        </label>
+        <label>
+            <input type="radio" name="theme" value="light">
+            Light
+        </label>
+        <label>
+            <input type="radio" name="theme" value="dark">
+            Dark
+        </label>
+    </div>
+    <script th:src="@{/js/theme-selector.js}"></script>
 </header>
 <aside id="nav-sidebar">
     <nav class="vertical-nav">

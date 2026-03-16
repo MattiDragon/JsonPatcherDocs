@@ -1,17 +1,47 @@
 :root {
-    /*TODO: make dark theme look good*/
-    color-scheme: light;
-    --background-color: light-dark(#ffffff, #272d26);
-    --background-color-1: light-dark(#f4f4f4, #383838);
-    --background-color-2: light-dark(#e0e0e0, #3d3d3d);
-    --text-color: light-dark(#000, #ddd);
-    --accent-color: light-dark(#1ea81e, #145d14);
-    --link-color: light-dark(#145d14, #1ea81e);
+    color-scheme: light dark;
+    --text-color: light-dark(#1f1c1f, #e3dce3);
+    --main-color: #1ea81e;
+    --alt-color: #145d14;
+    --red-color: light-dark(#ff0000, #c20303);
+
+    --accent-color: light-dark(var(--main-color), var(--alt-color));
+    --link-color: light-dark(var(--alt-color), var(--main-color));
+
+    --background-color: light-dark(
+            oklch(from var(--text-color) calc(1.2 - l) c h),
+            oklch(from var(--text-color) calc(1.11 - l) c h)
+    );
+    --panel-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.03) c h),
+            oklch(from var(--background-color) calc(l + 0.02) c h)
+    );
+    --code-background-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.01) c h),
+            oklch(from var(--background-color) calc(l + 0.02) c h)
+    );
+    --border-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.15) c h),
+            oklch(from var(--background-color) calc(l + 0.15) c h)
+    );
+    --table-highlight-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.03) c h),
+            oklch(from var(--background-color) calc(l + 0.05) c h)
+    );
+
     --beta-color: #efbe2a;
 
     color: var(--text-color);
     background-color: var(--background-color);
     font-family: sans-serif;
+}
+
+:root[data-theme='dark'] {
+    color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+    color-scheme: light;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,24 +62,17 @@ a, a:visited {
 }
 
 :not(pre) > code {
-    background-color: var(--background-color-1);
-    outline: 2px solid var(--background-color-2);
-    border-radius: 3px;
+    background-color: var(--code-background-color);
+    outline: 2px solid var(--border-color);
     padding-inline: .1em;
     margin-inline: 2px;
     font-weight: normal;
-    /* workaround prism changing the font to something way too big */
-    /* TODO: make prism not do that */
-    font-family: monospace !important;
 }
 
 pre:has(code:only-child) {
-    background-color: var(--background-color-1);
-    outline: 2px solid var(--background-color-2);
-    border-radius: 3px;
+    background-color: var(--code-background-color);
+    outline: 2px solid var(--border-color);
     padding: 4px;
-    font-size: 0.8em;
-
     overflow-x: auto;
 }
 
@@ -79,7 +102,7 @@ pre:has(code:only-child) {
     a.current::before {
         content: '';
         display: block;
-        background-color: #ff0000;
+        background-color: var(--red-color);
         width: 10px;
         height: 10px;
         position: absolute;
@@ -117,7 +140,7 @@ tr td:first-child {
 }
 
 tr:nth-child(even) {
-    background-color: var(--background-color-1);
+    background-color: var(--table-highlight-color);
 }
 
 tr:has(> td > .empty-row-marker) {
@@ -161,26 +184,12 @@ footer > section {
         z-index: 1000;
     }
 
-    .docs-page > header > #nav-sidebar-checkbox {
-        display: inline-block;
-        appearance: none;
-        background-image: /*[('url(' + @{/icons/list-light.svg} + ')')]*/ none;
-        /*@media (prefers-color-scheme: dark) {
-            background-image: !*[('url(' + @{/icons/list-dark.svg} + ')')]*! none;
-        }*/
-        background-size: contain;
-
-        background-color: var(--background-color-1);
-        border-radius: 5px;
-
+    .docs-page > header > .nav-sidebar-toggle {
+        display: inline-grid;
         float: left;
-        height: 100%;
-        aspect-ratio: 1;
-
-        cursor: pointer;
     }
 
-    .docs-page:not(:has(> header > #nav-sidebar-checkbox:checked)) > aside {
+    .docs-page:not(:has(#nav-sidebar-checkbox:checked)) > aside {
         display: none;
     }
 }
@@ -209,10 +218,11 @@ div.code-toolbar > .toolbar {
     text-align: center;
     font-weight: bold;
     font-size: 4rem;
-    background-color: #ff0;
-    border: .5rem solid black;
+    background-color: var(--beta-color);
+    border: .5rem solid light-dark(var(--text-color), var(--background-color));
     border-radius: 1rem;
     font-style: normal;
+    color: black;
 }
 
 .skip-to-content {
@@ -233,7 +243,7 @@ div.code-toolbar > .toolbar {
 
         overflow: visible;
         color: var(--text-color);
-        background-color: var(--background-color-1);
+        background-color: var(--panel-color);
 
         z-index: 10000;
     }

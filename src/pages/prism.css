@@ -1,0 +1,92 @@
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+:not(pre) > code,
+pre:has(code:only-child) {
+    font-family: monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    tab-size: 2;
+
+    hyphens: none;
+}
+
+:not(pre) > code {
+    white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: light-dark(#47515b, #9eb1bd);
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: light-dark(#007068, #06beb1);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: light-dark(#3a7200, #63bd06);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: light-dark(#885113, #e09c4b);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: light-dark(#004a86, #6ebaff);
+}
+
+.token.function,
+.token.class-name {
+    color: light-dark(#93152f, #ff6282);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #e90;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
