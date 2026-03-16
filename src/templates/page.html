@@ -28,6 +28,7 @@
 <body class="docs-page">
 <header>
     <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
+    <a class="skip-to-content" href="#content">Skip to content</a>
     <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
 </header>
 <aside id="nav-sidebar">
@@ -96,7 +97,7 @@
         <th:block th:replace="${extraNav}"></th:block>
     </th:block>
 </aside>
-<main>
+<main id="content">
     <th:block th:replace="${body}"></th:block>
 </main>
 <footer>
