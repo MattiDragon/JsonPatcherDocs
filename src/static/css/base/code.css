@@ -1,0 +1,34 @@
+:not(pre) > code,
+pre:has(code:only-child) {
+    font-family: monospace;
+    font-size: 1em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 2;
+    hyphens: none;
+}
+
+:not(pre) > code {
+    background-color: var(--code-background-color);
+    outline: 2px solid var(--border-color);
+    padding-inline: .1em;
+    margin-inline: 2px;
+    font-weight: normal;
+    white-space: normal;
+}
+
+pre:has(code:only-child) {
+    background-color: var(--code-background-color);
+    outline: 2px solid var(--border-color);
+    padding: 4px;
+    overflow-x: auto;
+}
+
+/* Fix prism toolbar positioning */
+div.code-toolbar > .toolbar {
+    top: 0 !important;
+}

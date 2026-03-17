@@ -1,0 +1,49 @@
+:root {
+    color-scheme: light dark;
+    --text-color: light-dark(#1f1c1f, #e3dce3);
+    --main-color: #1ea81e;
+    --alt-color: #145d14;
+    --red-color: light-dark(#ff0000, #c20303);
+
+    --accent-color: light-dark(var(--main-color), var(--alt-color));
+    --link-color: light-dark(var(--alt-color), var(--main-color));
+
+    --background-color: light-dark(
+            oklch(from var(--text-color) calc(1.2 - l) c h),
+            oklch(from var(--text-color) calc(1.11 - l) c h)
+    );
+    --panel-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.03) c h),
+            oklch(from var(--background-color) calc(l + 0.02) c h)
+    );
+    --code-background-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.01) c h),
+            oklch(from var(--background-color) calc(l + 0.02) c h)
+    );
+    --border-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.15) c h),
+            oklch(from var(--background-color) calc(l + 0.15) c h)
+    );
+    --table-highlight-color: light-dark(
+            oklch(from var(--background-color) calc(l - 0.03) c h),
+            oklch(from var(--background-color) calc(l + 0.05) c h)
+    );
+
+    --beta-color: #efbe2a;
+
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font-family: sans-serif;
+}
+
+:root[data-theme='dark'] {
+    color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+    color-scheme: light;
+}
+
+a, a:visited {
+    color: var(--link-color);
+}

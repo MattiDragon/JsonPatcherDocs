@@ -1,0 +1,69 @@
+.beta-tag {
+    /* Gets rid of leading space */
+    display: inline-block;
+
+    font-size: 0.5em;
+    background-color: var(--beta-color);
+    padding: 1px 2px;
+    margin-inline-start: 0.25em;
+    border-radius: 4px;
+    vertical-align: super;
+    color: black;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+.todo-marker {
+    padding-block: 3rem;
+    display: block;
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.todo-marker::before {
+    content: 'TODO';
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 4rem;
+    background-color: var(--beta-color);
+    border: .5rem solid light-dark(var(--text-color), var(--background-color));
+    border-radius: 1rem;
+    font-style: normal;
+    color: black;
+}
+
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+
+    &:focus {
+        height: fit-content;
+        width: fit-content;
+        inset: 0 auto 0 10px;
+        padding: .25em .5em;
+        border-radius: .5em;
+        margin-block: auto;
+
+        overflow: visible;
+        color: var(--text-color);
+        background-color: var(--panel-color);
+
+        z-index: 10000;
+    }
+}
+
+footer > section {
+    > h1 {
+        font-size: 1em;
+        margin: 0;
+
+        &::after {
+            content: none;
+        }
+    }
+}
