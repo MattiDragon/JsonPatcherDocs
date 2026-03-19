@@ -32,3 +32,8 @@
         margin-bottom: -0.15em;
     }
 }
+
+/* Used to make some code blocks go on a new line instead of getting cut in half */
+.keep-block {
+    display: inline-block;
+}

@@ -32,7 +32,7 @@
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$LibraryEntry}">
                 Library <code th:text="${object.name}"></code>
-                <th:block th:if="${object.entry.location.isPresent()}">: <code th:text="${object.entry.location.get()}"></code></th:block>
+                <th:block th:if="${object.entry.location.isPresent()}">: <code class="keep-block" th:text="${object.entry.location.get()}"></code></th:block>
                 <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$GlobalLibraryEntry}">
@@ -48,11 +48,11 @@
                 <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$TypeAliasEntry}">
-                Type alias <code th:text="${object.name}"></code> = <code th:text="${util.formatDocType(object.entry.definition)}"></code>
+                Type alias <code th:text="${object.name}"></code> = <code class="keep-block" th:text="${util.formatDocType(object.entry.definition)}"></code>
                 <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$MetadataEntry}">
-                Metadata tag <code th:text="'@' + ${object.name}"></code>: <code th:text="${util.formatDocType(object.entry.type)}"></code>
+                Metadata tag <code th:text="'@' + ${object.name}"></code>: <code class="keep-block" th:text="${util.formatDocType(object.entry.type)}"></code>
                 <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
 
@@ -65,11 +65,11 @@
                      th:id="'property:' + ${propertyId}"
                      th:attr="data-function=${isFunction}">
                 <h4 th:if="${isFunction}">
-                    Function <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                    Function <code th:text="${propertyId}"></code>: <code class="keep-block" th:text="${util.formatDocType(property.entry.type)}"></code>
                     <th:block th:replace="~{::section-link('property:' + ${propertyId})}"></th:block>
                 </h4>
                 <h4 th:if="!${isFunction}">
-                    Property <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                    Property <code th:text="${propertyId}"></code>: <code class="keep-block" th:text="${util.formatDocType(property.entry.type)}"></code>
                     <th:block th:replace="~{::section-link('property:' + ${propertyId})}"></th:block>
                 </h4>
 
