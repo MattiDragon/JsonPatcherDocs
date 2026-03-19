@@ -8,6 +8,10 @@
     --accent-color: light-dark(var(--main-color), var(--alt-color));
     --link-color: light-dark(var(--alt-color), var(--main-color));
 
+    --faded-text-color: light-dark(
+            oklch(from var(--text-color) calc(l + 0.3) c h),
+            oklch(from var(--text-color) calc(l - 0.3) c h)
+    );
     --background-color: light-dark(
             oklch(from var(--text-color) calc(1.2 - l) c h),
             oklch(from var(--text-color) calc(1.11 - l) c h)

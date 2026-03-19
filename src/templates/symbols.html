@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="extra-css">
+<head th:fragment="extra-css">
     <link rel="stylesheet" th:href="@{/css/pages/symbols.css}">
-</th:block>
+</head>
 <body>
 <!--/*@thymesVar id="tree" type="dev.mattidragon.jsonpatcher.docs.tree.DocTree"*/-->
 <th:block th:fragment="symbol-tree(tree)">
@@ -9,10 +9,15 @@
              th:each="namespace : ${util.sortedNamespaces(tree)}"
              th:with="namespaceId=${#strings.listJoin(namespace.description.parts, '.')}"
              th:id="'namespace:' + ${namespaceId}">
-
         <th:block th:switch="${namespaceId}">
-            <h2 th:case="''">(no namespace)</h2>
-            <h2 th:case="*">Namespace <code th:text="${namespaceId}"></code></h2>
+            <h2 th:case="''">
+                (no namespace)
+                <th:block th:replace="~{::section-link('namespace:')}"></th:block>
+            </h2>
+            <h2 th:case="*">
+                Namespace <code th:text="${namespaceId}"></code>
+                <th:block th:replace="~{::section-link('namespace:' + ${namespaceId})}"></th:block>
+            </h2>
         </th:block>
 
         <th:block th:if="${namespace.entry} != null" th:insert="~{::entry-description(${namespace.entry})}"></th:block>
@@ -23,25 +28,32 @@
                  th:id="'object:' + ${objectId}">
             <h3 th:if="${object.entry} == null">
                 Unknown object <code th:text="${object.name}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$LibraryEntry}">
-                Library <code th:text="${object.name}"></code><th:block th:if="${object.entry.location.isPresent()}">: <code th:text="${object.entry.location.get()}"></code>
-            </th:block>
+                Library <code th:text="${object.name}"></code>
+                <th:block th:if="${object.entry.location.isPresent()}">: <code th:text="${object.entry.location.get()}"></code></th:block>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$GlobalLibraryEntry}">
                 Global library <code th:text="${object.name}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$GlobalValueEntry}">
                 Global variable <code th:text="${object.name}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$TypeDeclarationEntry}">
                 Type <code th:text="${object.name}"></code> based on <code th:text="${object.entry.baseType.name.toLowerCase()}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$TypeAliasEntry}">
                 Type alias <code th:text="${object.name}"></code> = <code th:text="${util.formatDocType(object.entry.definition)}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
             <h3 th:if="${object.entry instanceof dev.mattidragon.jsonpatcher.docs.data.DocEntry$MetadataEntry}">
                 Metadata tag <code th:text="'@' + ${object.name}"></code>: <code th:text="${util.formatDocType(object.entry.type)}"></code>
+                <th:block th:replace="~{::section-link('object:' + ${objectId})}"></th:block>
             </h3>
 
             <th:block th:if="${object.entry} != null" th:insert="~{::entry-description(${object.entry})}"></th:block>
@@ -54,9 +66,11 @@
                      th:attr="data-function=${isFunction}">
                 <h4 th:if="${isFunction}">
                     Function <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                    <th:block th:replace="~{::section-link('property:' + ${propertyId})}"></th:block>
                 </h4>
                 <h4 th:if="!${isFunction}">
                     Property <code th:text="${propertyId}"></code>: <code th:text="${util.formatDocType(property.entry.type)}"></code>
+                    <th:block th:replace="~{::section-link('property:' + ${propertyId})}"></th:block>
                 </h4>
 
                 <th:block th:if="${property.entry} != null" th:insert="~{::entry-description(${property.entry})}"></th:block>
@@ -75,6 +89,12 @@
                   th:utext="${mdRenderer.render(element)}">
         </th:block>
     </div>
+</th:block>
+
+<th:block th:fragment="section-link(id)">
+    <a th:href="'#' + ${id}" class="section-link">
+        <svg th:replace="~{icons::link('var(--section-link-color)')}"></svg>
+    </a>
 </th:block>
 
 <th:block th:fragment="extra-nav(tree)">

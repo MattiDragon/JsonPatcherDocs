@@ -9,3 +9,26 @@
         margin-inline-start: 0.5rem;
     }
 }
+
+@property --section-link-color-factor {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}
+
+.section-link {
+    /* Have to animate the factor, as firefox cannot correctly animate custom properties with custom properties as values */
+    --section-link-color: color-mix(in oklab, var(--text-color) var(--section-link-color-factor), var(--faded-text-color));
+    transition: --section-link-color-factor 200ms;
+
+    &:hover, &:focus-visible {
+        --section-link-color-factor: 100%;
+    }
+
+    > svg {
+        width: 1em;
+        height: 1em;
+        vertical-align: baseline;
+        margin-bottom: -0.15em;
+    }
+}
