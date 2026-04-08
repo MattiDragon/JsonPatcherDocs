@@ -24,30 +24,32 @@
 </head>
 <body class="docs-page">
 <header>
-    <div class="nav-sidebar-toggle panel-toggle-checkbox">
-        <svg th:replace="~{icons::list('var(--text-color)')}"></svg>
-        <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
-    </div>
-    <a class="skip-to-content" href="#content">Skip to content</a>
-    <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
-    <div class="theme-selector-toggle panel-toggle-checkbox">
-        <div class="light-icon" th:insert="~{icons::sun('light-dark(var(--text-color), transparent)')}"></div>
-        <div class="dark-icon" th:insert="~{icons::moon('light-dark(transparent, var(--text-color))')}"></div>
-        <input type="checkbox" id="theme-selector-checkbox" aria-controls="theme-selector" aria-label="Theme selector visible">
-    </div>
-    <div id="theme-selector">
-        <label>
-            <input type="radio" name="theme" value="auto">
-            Auto
-        </label>
-        <label>
-            <input type="radio" name="theme" value="light">
-            Light
-        </label>
-        <label>
-            <input type="radio" name="theme" value="dark">
-            Dark
-        </label>
+    <div class="header-content">
+        <div class="nav-sidebar-toggle panel-toggle-checkbox">
+            <svg th:replace="~{icons::list('var(--text-color)')}"></svg>
+            <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
+        </div>
+        <a class="skip-to-content" href="#content">Skip to content</a>
+        <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
+        <div class="theme-selector-toggle panel-toggle-checkbox">
+            <div class="light-icon" th:insert="~{icons::sun('light-dark(var(--text-color), transparent)')}"></div>
+            <div class="dark-icon" th:insert="~{icons::moon('light-dark(transparent, var(--text-color))')}"></div>
+            <input type="checkbox" id="theme-selector-checkbox" aria-controls="theme-selector" aria-label="Theme selector visible">
+        </div>
+        <div id="theme-selector">
+            <label>
+                <input type="radio" name="theme" value="auto">
+                Auto
+            </label>
+            <label>
+                <input type="radio" name="theme" value="light">
+                Light
+            </label>
+            <label>
+                <input type="radio" name="theme" value="dark">
+                Dark
+            </label>
+        </div>
     </div>
     <script th:src="@{/js/theme-selector.js}"></script>
 </header>

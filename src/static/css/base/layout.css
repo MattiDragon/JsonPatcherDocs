@@ -4,33 +4,35 @@
                          "sidebar content ."
                          "footer footer footer";
     grid-template-rows: 3rem 1fr auto;
-    grid-template-columns: 1fr minmax(auto, 1200px) 1fr;
+    grid-template-columns: [page-start] 1fr [content-start] minmax(auto, 1200px) [content-end] 1fr [page-end];
     min-height: 100svh;
 
     > header {
         display: grid;
-        grid-template-areas: "header-content";
-        grid-template-rows: 100%;
+        grid-template-columns: subgrid;
         position: relative;
 
         grid-area: header;
-        padding: 5px;
         background-color: var(--accent-color);
 
-        > .panel-toggle-checkbox {
+        .header-content {
+            display: grid;
+            position: relative;
+            grid-template-columns: subgrid;
+            grid-template-rows: subgrid;
+            grid-column: content;
+            padding: 5px;
+        }
+
+        .panel-toggle-checkbox {
             grid-area: header-content;
-            grid-template-areas: 'area';
+            grid-column: content;
 
             height: 100%;
             aspect-ratio: 1;
 
             > * {
                 grid-area: area;
-            }
-
-            > div {
-                /* Somehow this fixes the parent grid leaking out */
-                display: grid;
             }
 
             svg {
@@ -46,19 +48,19 @@
             }
         }
 
-        > .nav-sidebar-toggle {
+        .nav-sidebar-toggle {
             display: none;
             justify-self: start;
         }
 
-        > .theme-selector-toggle {
+        .theme-selector-toggle {
             display: grid;
             justify-self: end;
         }
 
-        > .docs-title {
+        .docs-title {
             justify-self: center;
-            grid-area: header-content;
+            grid-column: content;
             font-size: 1.5rem;
             font-weight: 600;
 
@@ -67,15 +69,15 @@
             }
         }
 
-        > #theme-selector {
+        #theme-selector {
             display: none;
         }
 
-        &:has(.theme-selector-toggle input:checked) > #theme-selector {
+        & > .header-content:has(.theme-selector-toggle input:checked) > #theme-selector {
             display: grid;
             position: absolute;
             background-color: var(--panel-color);
-            border-width: 0 0 2px 2px;
+            border-width: 0 2px 2px 2px;
             border-color: var(--border-color);
             border-style: solid;
             z-index: 100;
@@ -87,6 +89,7 @@
 
     > aside {
         grid-area: sidebar;
+        justify-self: end;
         position: sticky;
         top: 0;
         width: 300px;
@@ -96,7 +99,7 @@
         background-color: var(--panel-color);
         border-color: var(--border-color);
         border-style: solid;
-        border-width: 0 2px 2px 0;
+        border-width: 0 2px 2px 2px;
     }
 
     > main {
@@ -136,12 +139,14 @@
 
 @media screen and (width < 1000px) {
     .docs-page > aside {
-        position: relative;
+        position: static;
+        justify-self: start;
+        border-width: 0 2px 2px 0;
         grid-area: content;
         z-index: 1000;
     }
 
-    .docs-page > header > .nav-sidebar-toggle {
+    .docs-page > header .nav-sidebar-toggle {
         display: inline-grid;
         float: left;
     }
