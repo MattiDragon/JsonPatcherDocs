@@ -96,10 +96,6 @@
         max-width: 100%;
         height: fit-content;
         padding: 20px;
-        background-color: var(--panel-color);
-        border-color: var(--border-color);
-        border-style: solid;
-        border-width: 0 2px 2px 2px;
     }
 
     > main {
@@ -141,9 +137,13 @@
     .docs-page > aside {
         position: static;
         justify-self: start;
-        border-width: 0 2px 2px 0;
         grid-area: content;
         z-index: 1000;
+
+        background-color: var(--panel-color);
+        border-color: var(--border-color);
+        border-style: solid;
+        border-width: 0 2px 2px 0;
     }
 
     .docs-page > header .nav-sidebar-toggle {
