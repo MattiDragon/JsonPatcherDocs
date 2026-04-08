@@ -1,8 +1,10 @@
 package dev.mattidragon.jsonpatcher.docgen;
 
 import org.commonmark.Extension;
+import org.commonmark.ext.gfm.alerts.AlertsExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
@@ -14,7 +16,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConvertMarkdown {
-    private static final List<Extension> EXTENSIONS = Arrays.asList(StrikethroughExtension.create(), TablesExtension.create());
+    private static final List<Extension> EXTENSIONS = Arrays.asList(
+            StrikethroughExtension.create(),
+            TablesExtension.create(),
+            AlertsExtension.create(),
+            HeadingAnchorExtension.create()
+    );
     public static final Parser PARSER = Parser.builder()
             .extensions(EXTENSIONS)
             .build();

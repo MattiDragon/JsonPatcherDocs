@@ -8,6 +8,8 @@ module jsonpatcher.docs.tooling {
     requires org.commonmark;
     requires org.commonmark.ext.gfm.strikethrough;
     requires org.commonmark.ext.gfm.tables;
+    requires org.commonmark.ext.gfm.alerts;
+    requires org.commonmark.ext.heading.anchor;
     requires jsonpatcher.tools.doctool;
     requires jsonpatcher.lang.parser;
     requires jsonpatcher.lang.ast;
