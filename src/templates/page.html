@@ -18,7 +18,8 @@
     <script defer src="https://unpkg.com/prismjs@1.30.0/components/prism-core.min.js"></script>
     <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/toolbar/prism-toolbar.min.js"></script>
-    <script defer src="https://unpkg.com/prismjs@1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script defer
+            src="https://unpkg.com/prismjs@1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
     <script defer th:src="@{/js/prism-lang-jsonpatcher.js}"></script>
     <script defer th:src="@{/js/fix-current-link.js}"></script>
 </head>
@@ -27,14 +28,16 @@
     <div class="header-content">
         <div class="nav-sidebar-toggle panel-toggle-checkbox">
             <svg th:replace="~{icons::list('var(--text-color)')}"></svg>
-            <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar" aria-label="Navigation visible">
+            <input type="checkbox" id="nav-sidebar-checkbox" aria-controls="nav-sidebar"
+                   aria-label="Navigation visible">
         </div>
         <a class="skip-to-content" href="#content">Skip to content</a>
         <span class="docs-title">JsonPatcher Docs<span class="beta-tag"> beta</span></span>
         <div class="theme-selector-toggle panel-toggle-checkbox">
             <div class="light-icon" th:insert="~{icons::sun('light-dark(var(--text-color), transparent)')}"></div>
             <div class="dark-icon" th:insert="~{icons::moon('light-dark(transparent, var(--text-color))')}"></div>
-            <input type="checkbox" id="theme-selector-checkbox" aria-controls="theme-selector" aria-label="Theme selector visible">
+            <input type="checkbox" id="theme-selector-checkbox" aria-controls="theme-selector"
+                   aria-label="Theme selector visible">
         </div>
         <div id="theme-selector">
             <label>
@@ -54,70 +57,72 @@
     <script th:src="@{/js/theme-selector.js}"></script>
 </header>
 <aside id="nav-sidebar">
-    <nav class="vertical-nav">
-        <ul>
-            <li><a th:href="@{/}">Home</a></li>
-            <li>
-                Getting Started
-                <ul>
-                    <li><a th:href="@{/getting_started/terminology.html}">Terminology</a></li>
-                    <li><a th:href="@{/getting_started/mod_developers.html}">For Mod Developers</a></li>
-                    <li><a th:href="@{/getting_started/modpack_developers.html}">For Modpack Developers</a></li>
-                </ul>
-            </li>
-            <li>
-                Program Types
-                <ul>
-                    <li><a th:href="@{/program_types/regular_patch.html}">Regular Patches</a></li>
-                    <li><a th:href="@{/program_types/metapatch.html}">Metapatches</a></li>
-                    <li><a th:href="@{/program_types/library.html}">Libraries</a></li>
-                    <li><a th:href="@{/program_types/script.html}">Scripts</a></li>
-                </ul>
-            </li>
-            <li>
-                <a th:href="@{/syntax/index.html}">Syntax</a>
-                <ul>
-                    <li><a th:href="@{/syntax/metadata.html}">Metadata</a></li>
-                    <li>
-                        <a th:href="@{/syntax/statements.html}">Statements</a>
-                        <ul>
-                            <li><a th:href="@{/syntax/if-else-and-blocks.html}">If, Else and Blocks</a></li>
-                            <li><a th:href="@{/syntax/loops.html}">Loops</a></li>
-                            <li><a th:href="@{/syntax/functions.html#defining-functions}">Functions</a></li>
-                            <li><a th:href="@{/syntax/variables.html#defining-variables}">Variables</a></li>
-                        </ul>
-                    </li>
-                    <li><a th:href="@{/syntax/operators.html}">Operators</a></li>
-                    <li><a th:href="@{/syntax/root-object.html}">Root Object</a></li>
-                    <li><a th:href="@{/syntax/functions.html}">Functions</a></li>
-                    <li><a th:href="@{/syntax/variables.html}">Variables</a></li>
-                </ul>
-            </li>
-            <li>
-                Documenting code
-                <ul>
-                    <li><a th:href="@{/docs/doc_comments.html}">Doc Comments</a></li>
-                    <li><a th:href="@{/docs/doc_types.html}">Doc Types</a></li>
-                    <li><a th:href="@{/docs/doc_conditions.html}">Doc Conditions</a></li>
-                    <li><a th:href="@{/docs/meta_comments.html}">Meta Comments</a></li>
-                    <li><a th:href="@{/docs/naming.html}">Naming Conventions</a></li>
-                </ul>
-            </li>
-            <li>
-                Symbols
-                <ul>
-                    <li><a th:href="@{/symbols/stdlib.html}">Standard Library</a></li>
-                    <li><a th:href="@{/symbols/mod-stdlib.html}">Mod Library</a></li>
-                    <li><a th:href="@{/symbols/mod-data.html}">Datapacks</a></li>
-                    <li><a th:href="@{/symbols/mod-assets.html}">Resource Packs</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <th:block th:if="${extraNav}">
-        <hr>
-        <th:block th:replace="${extraNav}"></th:block>
-    </th:block>
+    <div class="nav-wrapper">
+        <nav class="vertical-nav">
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li>
+                    Getting Started
+                    <ul>
+                        <li><a th:href="@{/getting_started/terminology.html}">Terminology</a></li>
+                        <li><a th:href="@{/getting_started/mod_developers.html}">For Mod Developers</a></li>
+                        <li><a th:href="@{/getting_started/modpack_developers.html}">For Modpack Developers</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Program Types
+                    <ul>
+                        <li><a th:href="@{/program_types/regular_patch.html}">Regular Patches</a></li>
+                        <li><a th:href="@{/program_types/metapatch.html}">Metapatches</a></li>
+                        <li><a th:href="@{/program_types/library.html}">Libraries</a></li>
+                        <li><a th:href="@{/program_types/script.html}">Scripts</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/syntax/index.html}">Syntax</a>
+                    <ul>
+                        <li><a th:href="@{/syntax/metadata.html}">Metadata</a></li>
+                        <li>
+                            <a th:href="@{/syntax/statements.html}">Statements</a>
+                            <ul>
+                                <li><a th:href="@{/syntax/if-else-and-blocks.html}">If, Else and Blocks</a></li>
+                                <li><a th:href="@{/syntax/loops.html}">Loops</a></li>
+                                <li><a th:href="@{/syntax/functions.html#defining-functions}">Functions</a></li>
+                                <li><a th:href="@{/syntax/variables.html#defining-variables}">Variables</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{/syntax/operators.html}">Operators</a></li>
+                        <li><a th:href="@{/syntax/root-object.html}">Root Object</a></li>
+                        <li><a th:href="@{/syntax/functions.html}">Functions</a></li>
+                        <li><a th:href="@{/syntax/variables.html}">Variables</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Documenting code
+                    <ul>
+                        <li><a th:href="@{/docs/doc_comments.html}">Doc Comments</a></li>
+                        <li><a th:href="@{/docs/doc_types.html}">Doc Types</a></li>
+                        <li><a th:href="@{/docs/doc_conditions.html}">Doc Conditions</a></li>
+                        <li><a th:href="@{/docs/meta_comments.html}">Meta Comments</a></li>
+                        <li><a th:href="@{/docs/naming.html}">Naming Conventions</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Symbols
+                    <ul>
+                        <li><a th:href="@{/symbols/stdlib.html}">Standard Library</a></li>
+                        <li><a th:href="@{/symbols/mod-stdlib.html}">Mod Library</a></li>
+                        <li><a th:href="@{/symbols/mod-data.html}">Datapacks</a></li>
+                        <li><a th:href="@{/symbols/mod-assets.html}">Resource Packs</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <th:block th:if="${extraNav}">
+            <hr>
+            <th:block th:replace="${extraNav}"></th:block>
+        </th:block>
+    </div>
 </aside>
 <main id="content">
     <th:block th:replace="${body}"></th:block>

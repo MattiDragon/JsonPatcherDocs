@@ -90,12 +90,15 @@
     > aside {
         grid-area: sidebar;
         justify-self: end;
-        position: sticky;
-        top: 0;
-        width: 300px;
-        max-width: 100%;
-        height: fit-content;
         padding: 20px;
+
+        > .nav-wrapper {
+            position: sticky;
+            top: 0;
+            width: 300px;
+            max-width: 100%;
+            height: fit-content;
+        }
     }
 
     > main {
@@ -139,11 +142,16 @@
         justify-self: start;
         grid-area: content;
         z-index: 1000;
+        height: fit-content;
 
         background-color: var(--panel-color);
         border-color: var(--border-color);
         border-style: solid;
         border-width: 0 2px 2px 0;
+
+        > .nav-wrapper {
+            position: static;
+        }
     }
 
     .docs-page > header .nav-sidebar-toggle {
