@@ -178,7 +178,7 @@ tasks.register<Exec>("serve") {
     executable(
         // Find a compiler (likely to be jdk) and find the corresponding jwebserver executable
         javaToolchains.compilerFor {
-            languageVersion = JavaLanguageVersion.of(21)
+            languageVersion = JavaLanguageVersion.of(25)
         }
             .get()
             .metadata

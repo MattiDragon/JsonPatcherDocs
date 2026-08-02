@@ -4,6 +4,7 @@
 </head>
 <body>
 <!--/*@thymesVar id="tree" type="dev.mattidragon.jsonpatcher.docs.tree.DocTree"*/-->
+<!--/*@thymesVar id="util" type="dev.mattidragon.jsonpatcher.docgen.Render$UtilFunctions"*/-->
 <th:block th:fragment="symbol-tree(tree)">
     <section class="doc-namespace"
              th:each="namespace : ${util.sortedNamespaces(tree)}"
@@ -106,24 +107,25 @@
                 <details>
                     <summary>
                         <th:block th:switch="${namespaceId}">
-                            <a th:case="''" href="#namespace:">(no namespace)</a>
-                            <a th:case="*" th:href="'#namespace:' + ${namespaceId}" th:text="${namespaceId}"></a>
+                            <a th:data-symbol-type="namespace" th:case="''" href="#namespace:">(no namespace)</a>
+                            <a th:data-symbol-type="namespace" th:case="*" th:href="'#namespace:' + ${namespaceId}" th:text="${namespaceId}"></a>
                         </th:block>
                     </summary>
                     <ul>
                         <li th:each="object : ${util.sortedObjects(namespace)}"
                             th:with="objectId=${#strings.listJoin(namespace.description.withLast(object.name).parts, '.')}">
-                            <details>
+                            <details th:if="${!object.properties.isEmpty()}">
                                 <summary>
-                                    <a th:href="'#object:' + ${objectId}" th:text="${object.name}"></a>
+                                    <a th:data-symbol-type="${util.symbolTypeName(object.entry)}" th:href="'#object:' + ${objectId}" th:text="${object.name}"></a>
                                 </summary>
                                 <ul>
                                     <li th:each="property : ${util.sortedProperties(object)}"
                                         th:with="propertyId=${#strings.listJoin(property.entry.namespace.withLast(property.entry.owner).withLast(property.entry.name).parts, '.')}">
-                                        <a th:href="'#property:' + ${propertyId}" th:text="${property.entry.name}"></a>
+                                        <a th:data-symbol-type="${util.symbolTypeName(property.entry)}" th:href="'#property:' + ${propertyId}" th:text="${property.entry.name}"></a>
                                     </li>
                                 </ul>
                             </details>
+                            <a th:if="${object.properties.isEmpty()}" th:data-symbol-type="${util.symbolTypeName(object.entry)}" th:href="'#object:' + ${objectId}" th:text="${object.name}"></a>
                         </li>
                     </ul>
                 </details>

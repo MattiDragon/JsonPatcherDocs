@@ -7,10 +7,12 @@ import dev.mattidragon.jsonpatcher.docs.tree.DocTreeNamespace;
 import dev.mattidragon.jsonpatcher.docs.tree.DocTreeObject;
 import dev.mattidragon.jsonpatcher.docs.tree.DocTreeProperty;
 import dev.mattidragon.jsonpatcher.docs.type.DocType;
+import dev.mattidragon.jsonpatcher.docs.type.FunctionDocType;
 import dev.mattidragon.jsonpatcher.docs.write.DocTypeWriter;
 import dev.mattidragon.jsonpatcher.lang.ast.meta.TreeMetadata;
 import dev.mattidragon.jsonpatcher.lang.error.DiagnosticsBuilder;
 import dev.mattidragon.jsonpatcher.lang.parse.Lexer;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.context.Context;
@@ -34,7 +36,7 @@ public class Render {
             }
             var name = args.removeFirst();
             var path = Path.of(args.removeFirst());
-            codeDocs.computeIfAbsent(name, n -> new TreeSet<>())
+            codeDocs.computeIfAbsent(name, _ -> new TreeSet<>())
                     .add(path);
         }
 
@@ -51,47 +53,7 @@ public class Render {
         context.setVariable("trees", docTrees);
         context.setVariable("mdRenderer", ConvertMarkdown.RENDERER);
         context.setVariable("mdParser", ConvertMarkdown.PARSER);
-        context.setVariable("util", new Object()  {
-            @SuppressWarnings("unused")
-            public String formatDocType(DocType type) {
-                return DocTypeWriter.write(type);
-            }
-
-            @SuppressWarnings("unused")
-            public Iterable<DocTreeNamespace> sortedNamespaces(DocTree tree) {
-                return tree.namespaces()
-                        .values()
-                        .stream()
-                        .sorted(Comparator.comparing(DocTreeNamespace::description))
-                        .toList();
-            }
-
-            @SuppressWarnings("unused")
-            public Iterable<DocTreeObject> sortedObjects(DocTreeNamespace tree) {
-                return tree.objects()
-                        .values()
-                        .stream()
-                        .sorted(Comparator.<DocTreeObject>comparingInt(obj -> switch (obj.entry()) {
-                            case DocEntry.GlobalEntry globalEntry -> 0;
-                            case DocEntry.LibraryEntry libraryEntry -> 1;
-                            case DocEntry.MetadataEntry metadataEntry -> 2;
-                            case DocEntry.TypeDeclarationEntry typeDeclarationEntry -> 3;
-                            case DocEntry.TypeAliasEntry typeAliasEntry -> 4;
-                            case DocEntry.NamespaceEntry namespaceEntry -> 5;
-                            case null, default -> 6;
-                        }).thenComparing(DocTreeObject::name))
-                        .toList();
-            }
-
-            @SuppressWarnings("unused")
-            public Iterable<DocTreeProperty> sortedProperties(DocTreeObject tree) {
-                return tree.properties()
-                        .values()
-                        .stream()
-                        .sorted(Comparator.comparing(p -> p.entry().name()))
-                        .toList();
-            }
-        });
+        context.setVariable("util", new UtilFunctions());
 
         var templatesPath = Path.of(templatesFolder);
         var pagesPath = templatesPath.resolve("pages");
@@ -125,5 +87,63 @@ public class Render {
             Lexer.lex(code, file.toString(), diagnostics, commentHandler);
         }
         return new DocTree(commentHandler.entries());
+    }
+
+    public static class UtilFunctions {
+        @SuppressWarnings("unused")
+        public String formatDocType(DocType type) {
+            return DocTypeWriter.write(type);
+        }
+
+        @SuppressWarnings("unused")
+        public Iterable<DocTreeNamespace> sortedNamespaces(DocTree tree) {
+            return tree.namespaces()
+                    .values()
+                    .stream()
+                    .sorted(Comparator.comparing(DocTreeNamespace::description))
+                    .toList();
+        }
+
+        @SuppressWarnings("unused")
+        public Iterable<DocTreeObject> sortedObjects(DocTreeNamespace tree) {
+            return tree.objects()
+                    .values()
+                    .stream()
+                    .sorted(Comparator.<DocTreeObject>comparingInt(obj -> switch (obj.entry()) {
+                        case DocEntry.GlobalEntry globalEntry -> 0;
+                        case DocEntry.LibraryEntry libraryEntry -> 1;
+                        case DocEntry.MetadataEntry metadataEntry -> 2;
+                        case DocEntry.TypeDeclarationEntry typeDeclarationEntry -> 3;
+                        case DocEntry.TypeAliasEntry typeAliasEntry -> 4;
+                        case DocEntry.NamespaceEntry namespaceEntry -> 5;
+                        case null, default -> 6;
+                    }).thenComparing(DocTreeObject::name))
+                    .toList();
+        }
+
+        @SuppressWarnings("unused")
+        public Iterable<DocTreeProperty> sortedProperties(DocTreeObject tree) {
+            return tree.properties()
+                    .values()
+                    .stream()
+                    .sorted(Comparator.comparing(p -> p.entry().name()))
+                    .toList();
+        }
+
+        @SuppressWarnings("unused")
+        public String symbolTypeName(@Nullable DocEntry entry) {
+            return switch (entry) {
+                case DocEntry.GlobalValueEntry _ -> "global value";
+                case DocEntry.GlobalLibraryEntry _ -> "global library";
+                case DocEntry.LibraryEntry _ -> "library";
+                case DocEntry.MetadataEntry _ -> "metadata";
+                case DocEntry.NamespaceEntry _ -> "namespace";
+                case DocEntry.PropertyEntry e when e.type() instanceof FunctionDocType -> "function";
+                case DocEntry.PropertyEntry _ -> "property";
+                case DocEntry.TypeAliasEntry _ -> "type alias";
+                case DocEntry.TypeDeclarationEntry _ -> "type";
+                case null -> "unknown";
+            };
+        }
     }
 }

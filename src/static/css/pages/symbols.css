@@ -37,3 +37,56 @@
 .keep-block {
     display: inline-block;
 }
+
+a[data-symbol-type]::before {
+    content: "?" / "";
+
+    display: inline-block;
+    width: 1lh;
+    text-align: center;
+    margin-inline-end: 0.25em;
+    border-radius: 100%;
+    color: light-dark(white, black);
+    background-color: light-dark(black, white);
+    font-family: monospace;
+}
+
+a[data-symbol-type="library"]::before {
+    content: "l" / "library";
+    background-color: light-dark(#007068, #06beb1);
+}
+
+a[data-symbol-type="type"]::before {
+    content: "t" / "type";
+    background-color: light-dark(#3a7200, #63bd06);
+}
+
+a[data-symbol-type="type alias"]::before {
+    content: "t*" / "type alias";
+    background-color: light-dark(#596e44, #99c56c);
+}
+
+a[data-symbol-type="metadata"]::before {
+    content: "@" / "metadata tag";
+    background-color: light-dark(#004a86, #6ebaff);
+}
+
+a[data-symbol-type="namespace"]::before {
+    content: "/" / "namespace";
+    background-color: light-dark(#47515b, #9eb1bd);
+}
+
+a[data-symbol-type="property"]::before {
+    content: "p" / "property";
+    background-color: light-dark(#885113, #e09c4b);
+}
+
+a[data-symbol-type="global value"]::before, a[data-symbol-type="global library"]::before {
+    content: "g" / "global";
+    background-color: light-dark(#885113, #e09c4b);
+}
+
+a[data-symbol-type="function"]::before {
+    content: "f" / "function";
+    background-color: light-dark(#93152f, #ff6282);
+}

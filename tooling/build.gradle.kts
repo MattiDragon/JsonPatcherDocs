@@ -16,3 +16,7 @@ dependencies {
     runtimeOnly(libs.logback)
     compileOnly(libs.jspecify)
 }
+
+tasks.withType<JavaCompile> {
+    options.release = 25
+}
