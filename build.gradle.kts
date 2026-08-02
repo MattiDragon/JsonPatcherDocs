@@ -3,15 +3,15 @@ plugins {
     `jvm-toolchains`
 }
 
-val stdlib: Configuration by configurations.creating {
+val stdlib = configurations.create("stdlib") {
     isCanBeResolved = true
     isTransitive = false
 }
-val mod: Configuration by configurations.creating {
+val mod = configurations.create("mod") {
     isCanBeResolved = true
     isTransitive = false
 }
-val tooling: Configuration by configurations.creating
+val tooling = configurations.create("tooling")
 
 fun Sync.configureExtractTask(configuration: Configuration, segmentsToDrop: Int = 1, filter: PatternFilterable.() -> Unit) {
     group = "documentation"
@@ -41,7 +41,7 @@ dependencies {
     mod(libs.jsonpatcher.mod)
 }
 
-val extractStdlib by tasks.registering(Sync::class) {
+val extractStdlib = tasks.register<Sync>("extractStdlib") {
     configureExtractTask(stdlib) {
         include("stdlib/*.jsonpatch")
         exclude("stdlib/internal_docs.jsonpatch")
@@ -49,35 +49,35 @@ val extractStdlib by tasks.registering(Sync::class) {
     into(layout.buildDirectory.dir("source/stdlib"))
 }
 
-val extractModDocs by tasks.registering(Sync::class) {
+val extractModDocs = tasks.register<Sync>("extractModDocs") {
     configureExtractTask(mod) {
         include("docs/*.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/general"))
 }
 
-val extractModDataDocs by tasks.registering(Sync::class) {
+val extractModDataDocs = tasks.register<Sync>("extractModDataDocs") {
     configureExtractTask(mod, 3) {
         include("data/*/jsonpatch/**.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/data"))
 }
 
-val extractModAssetDocs by tasks.registering(Sync::class) {
+val extractModAssetDocs = tasks.register<Sync>("extractModAssetDocs") {
     configureExtractTask(mod, 3) {
         include("assets/*/jsonpatch/**.jsonpatch")
     }
     into(layout.buildDirectory.dir("source/mod/assets"))
 }
 
-val extractFavicon by tasks.registering(Sync::class) {
+val extractFavicon = tasks.register<Sync>("extractFavicon") {
     configureExtractTask(mod, 2) {
         include("assets/jsonpatcher/icon.png")
     }
     into(layout.buildDirectory.dir("source/favicon"))
 }
 
-val convertMarkdown by tasks.registering(JavaExec::class) {
+val convertMarkdown = tasks.register<JavaExec>("convertMarkdown") {
     group = "documentation"
     description = "Converts Markdown files to HTML."
 
@@ -96,7 +96,7 @@ val convertMarkdown by tasks.registering(JavaExec::class) {
     inputs.dir(inDir)
 }
 
-val copyTemplates by tasks.registering(Sync::class) {
+val copyTemplates = tasks.register<Sync>("copyTemplates") {
     group = "documentation"
     description = "Prepares templates for rendering documentation."
 
@@ -113,7 +113,7 @@ val copyTemplates by tasks.registering(Sync::class) {
     dependsOn(convertMarkdown)
 }
 
-val renderDocumentation by tasks.registering(JavaExec::class) {
+val renderDocumentation = tasks.register<JavaExec>("renderDocumentation") {
     group = "documentation"
     description = "Renders the documentation using the templates."
 
@@ -154,7 +154,7 @@ val renderDocumentation by tasks.registering(JavaExec::class) {
     dependsOn(extractStdlib, extractModDocs, extractModDataDocs, extractModAssetDocs)
 }
 
-val joinSite by tasks.registering(Sync::class) {
+val joinSite = tasks.register<Sync>("joinSite") {
     group = "documentation"
     description = "Joins all generated documentation files into a single output directory."
 

@@ -25,7 +25,7 @@ import java.util.*;
 public class Render {
     private static final Logger LOGGER = LoggerFactory.getLogger("Site Renderer");
 
-    public static void main(String[] argArray) throws IOException {
+    static void main(String[] argArray) throws IOException {
         var args = new ArrayList<>(Arrays.asList(argArray));
         var templatesFolder = args.removeFirst();
         var outFolder = Path.of(args.removeFirst());
