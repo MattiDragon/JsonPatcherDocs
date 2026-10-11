@@ -1,6 +1,6 @@
 [versions]
 jsonpatcher-lang = "4f8b01364c"
-jsonpatcher-mod = "ced5ab1b7f"
+jsonpatcher-mod = "0e4681466c"
 jspecify = "1.0.0"
 thymeleaf = "3.1.5.RELEASE"
 slf4j = "2.0.17"
