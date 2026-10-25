@@ -16,7 +16,7 @@ It ships with JsonPatcher, but is disabled by default. To enable it, flip the fe
 
 RecipePatcher is meant to be used from a <a th:href="@{/program_types/metapatch.html}">metapatch</a>, because it acts on many recipe files at once.
 The API is exposed through the `jsonpatcher:recipepatcher` library, and the template system through `jsonpatcher:recipepatcher/templates`.
-The full API
+The full API is documented on <a th:href="@{/symbols/mod-data.html#namespace:recipepatcher}">the symbols page</a>.
 
 ## Simple Transformations
 The simplest use is replacing a single ingredient or output.

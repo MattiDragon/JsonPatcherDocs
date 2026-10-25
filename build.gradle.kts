@@ -169,23 +169,13 @@ tasks.assemble {
     dependsOn(joinSite)
 }
 
-tasks.register<Exec>("serve") {
+tasks.register<JavaExec>("serve") {
     group = "documentation"
     description = "Serves the generated documentation using a simple HTTP server."
 
+    mainModule = "jdk.httpserver"
+
     val contentDir = layout.buildDirectory.dir("out")
-
-    executable(
-        // Find a compiler (likely to be jdk) and find the corresponding jwebserver executable
-        javaToolchains.compilerFor {
-            languageVersion = JavaLanguageVersion.of(25)
-        }
-            .get()
-            .metadata
-            .installationPath
-            .file("bin/jwebserver")
-    )
-
     args(
         "-d", contentDir.get().asFile,
         "-p", "8080",
