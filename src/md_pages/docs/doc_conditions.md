@@ -18,6 +18,7 @@ Function names and metadata keys must be simple identifiers (`[A-Za-z_][A-Za-z0-
 Indicates that a specific library group is needed. 
 Library groups are mainly used to restrict access to libraries using java code.
 Fake library groups starting with a `+` are also used to indicate content only available to certain types of programs.
+Library groups starting with a `%` indicate that a specific feature flag is required.
 
 ```jsonpatcher
 #| @requires libgroup("reflection")
